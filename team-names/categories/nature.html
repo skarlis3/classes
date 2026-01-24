@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-category="nature">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature & Animals - Team Names</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/category-base.css">
+    <link rel="stylesheet" href="../css/category-themes.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to team names</a>
+    <div class="bg-effect" aria-hidden="true"></div>
+
+    <div class="container">
+        <nav class="top-nav" aria-label="Page navigation">
+            <a href="../index.html" class="back-link">
+                <span aria-hidden="true">←</span> All Categories
+            </a>
+            <div class="theme-toggle">
+                <span class="theme-toggle-label" id="theme-label">Theme: Dark</span>
+                <button class="toggle-switch" 
+                        role="switch" 
+                        aria-checked="false" 
+                        aria-labelledby="theme-label"
+                        onclick="toggleTheme()">
+                </button>
+            </div>
+        </nav>
+
+        <header>
+            <span class="category-icon" aria-hidden="true">❧</span>
+            <h1>Nature & Animals</h1>
+            <p class="tagline">Wildlife, weather, the natural world</p>
+        </header>
+
+        <main id="main-content">
+            <section class="names-section" aria-label="Generated team names">
+                <ul class="names-list" id="names-list" role="listbox" aria-label="Team name options"></ul>
+            </section>
+
+            <div class="actions">
+                <button class="generate-btn" onclick="generateNames()" aria-describedby="help-text">
+                    Generate New Batch
+                </button>
+                <p class="help-text" id="help-text">Click a name to select it, or generate a new batch</p>
+            </div>
+
+            <div class="selection-display" id="selection-display" aria-live="polite" aria-atomic="true">
+                <p class="selection-label">Your selection:</p>
+                <p class="selection-name" id="selected-name"></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Scroll until something feels right. No wrong answers. Some weird ones though.</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Local fallback names -->
+    <script src="../js/names.js"></script>
+
+    <!-- Shared module (auto-initializes) -->
+    <script src="../js/team-names.js"></script>
+</body>
+</html>

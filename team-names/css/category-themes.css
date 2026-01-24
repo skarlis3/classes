@@ -1,0 +1,671 @@
+/**
+ * Team Names Generator - Theme Definitions
+ * Color palettes and background effects for all categories
+ * All colors are AAA compliant for accessibility
+ */
+
+/* ========================================
+   CELESTIAL - Blue/Purple Cosmic
+   ======================================== */
+
+[data-category="celestial"] {
+    --bg-primary: #06070d;
+    --bg-secondary: #0c0e18;
+    --bg-card: #101425;
+    --bg-card-hover: #161b32;
+    --text-primary: #f0f2fa;
+    --text-secondary: #b8bcd0;
+    --text-muted: #a0a4b8;
+    --accent-primary: #88b8f0;
+    --accent-secondary: #b8a0e8;
+    --accent-tertiary: #60e0d0;
+    --border: #1e2340;
+    --glow-primary: rgba(107, 158, 221, 0.15);
+    --glow-secondary: rgba(155, 126, 212, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --star-color: rgba(255, 255, 255, 0.8);
+}
+
+[data-category="celestial"][data-theme="light"] {
+    --bg-primary: #f0f2f8;
+    --bg-secondary: #e4e8f4;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f4f6fc;
+    --text-primary: #1a1e30;
+    --text-secondary: #3a3e50;
+    --text-muted: #4a4e60;
+    --accent-primary: #2a5a9a;
+    --accent-secondary: #5a3a8a;
+    --accent-tertiary: #1a6a62;
+    --border: #c8cce0;
+    --glow-primary: rgba(58, 110, 181, 0.1);
+    --glow-secondary: rgba(106, 74, 154, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --star-color: rgba(58, 110, 181, 0.3);
+}
+
+/* Celestial starfield background */
+[data-category="celestial"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 30% 20%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, var(--glow-secondary) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 90%, var(--glow-primary) 0%, transparent 40%);
+}
+
+[data-category="celestial"] .bg-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20% 30%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 40% 70%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 50% 10%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 60% 50%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 70% 20%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 80% 80%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 10% 60%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 90% 40%, var(--star-color), transparent),
+        radial-gradient(2px 2px at 25% 85%, var(--star-color), transparent),
+        radial-gradient(2px 2px at 75% 15%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 35% 45%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 65% 75%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 15% 25%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 85% 55%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 45% 35%, var(--star-color), transparent),
+        radial-gradient(1px 1px at 55% 95%, var(--star-color), transparent);
+    animation: twinkle 8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* ========================================
+   MYTHOLOGY - Gold/Bronze Ancient
+   ======================================== */
+
+[data-category="mythology"] {
+    --bg-primary: #0d0a06;
+    --bg-secondary: #161208;
+    --bg-card: #1e1810;
+    --bg-card-hover: #2a2218;
+    --text-primary: #f4f0e8;
+    --text-secondary: #c8c0b0;
+    --text-muted: #a8a090;
+    --accent-primary: #d4a860;
+    --accent-secondary: #c08048;
+    --accent-tertiary: #e8c888;
+    --border: #3a3020;
+    --glow-primary: rgba(212, 168, 96, 0.15);
+    --glow-secondary: rgba(192, 128, 72, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="mythology"][data-theme="light"] {
+    --bg-primary: #f8f4ec;
+    --bg-secondary: #f0e8dc;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf6f0;
+    --text-primary: #2a2418;
+    --text-secondary: #4a4030;
+    --text-muted: #5a5040;
+    --accent-primary: #8a6020;
+    --accent-secondary: #704810;
+    --accent-tertiary: #6a5018;
+    --border: #d8d0c0;
+    --glow-primary: rgba(138, 96, 32, 0.1);
+    --glow-secondary: rgba(112, 72, 16, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   NATURE - Green Forest
+   ======================================== */
+
+[data-category="nature"] {
+    --bg-primary: #070d08;
+    --bg-secondary: #0c160e;
+    --bg-card: #121e14;
+    --bg-card-hover: #1a2a1c;
+    --text-primary: #f0f4f0;
+    --text-secondary: #b8c8ba;
+    --text-muted: #98a89a;
+    --accent-primary: #70c080;
+    --accent-secondary: #50a068;
+    --accent-tertiary: #90d8a0;
+    --border: #243826;
+    --glow-primary: rgba(112, 192, 128, 0.15);
+    --glow-secondary: rgba(80, 160, 104, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="nature"][data-theme="light"] {
+    --bg-primary: #f4f8f4;
+    --bg-secondary: #e8f0e8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f8f0;
+    --text-primary: #1a241a;
+    --text-secondary: #3a4a3a;
+    --text-muted: #4a5a4a;
+    --accent-primary: #2a6a38;
+    --accent-secondary: #1a5028;
+    --accent-tertiary: #1a5a30;
+    --border: #c8d8c8;
+    --glow-primary: rgba(42, 106, 56, 0.1);
+    --glow-secondary: rgba(26, 80, 40, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="nature"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 20% 80%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, var(--glow-secondary) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, var(--glow-primary) 0%, transparent 60%);
+}
+
+/* ========================================
+   RETRO - Pink/Cyan 80s Neon
+   ======================================== */
+
+[data-category="retro"] {
+    --bg-primary: #0a0812;
+    --bg-secondary: #120e1a;
+    --bg-card: #1a1424;
+    --bg-card-hover: #241c32;
+    --text-primary: #f8f0fc;
+    --text-secondary: #d0c0dc;
+    --text-muted: #b0a0bc;
+    --accent-primary: #f090c0;
+    --accent-secondary: #80d0e0;
+    --accent-tertiary: #c080f0;
+    --border: #382848;
+    --glow-primary: rgba(240, 144, 192, 0.2);
+    --glow-secondary: rgba(128, 208, 224, 0.15);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="retro"][data-theme="light"] {
+    --bg-primary: #fcf8fc;
+    --bg-secondary: #f4ecf8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf4fc;
+    --text-primary: #241828;
+    --text-secondary: #483858;
+    --text-muted: #584868;
+    --accent-primary: #a04070;
+    --accent-secondary: #207080;
+    --accent-tertiary: #6030a0;
+    --border: #e0d0e8;
+    --glow-primary: rgba(160, 64, 112, 0.1);
+    --glow-secondary: rgba(32, 112, 128, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="retro"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 10% 90%, var(--glow-primary) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 10%, var(--glow-secondary) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(192, 128, 240, 0.08) 0%, transparent 50%);
+}
+
+/* Retro uses tertiary for button gradient */
+[data-category="retro"] .generate-btn {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+}
+
+/* ========================================
+   FOOD - Orange Culinary
+   ======================================== */
+
+[data-category="food"] {
+    --bg-primary: #0d0908;
+    --bg-secondary: #161110;
+    --bg-card: #201814;
+    --bg-card-hover: #2c201a;
+    --text-primary: #faf4f0;
+    --text-secondary: #d4c4b8;
+    --text-muted: #b4a498;
+    --accent-primary: #e89860;
+    --accent-secondary: #d07048;
+    --accent-tertiary: #f0b080;
+    --border: #3c2c24;
+    --glow-primary: rgba(232, 152, 96, 0.18);
+    --glow-secondary: rgba(208, 112, 72, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="food"][data-theme="light"] {
+    --bg-primary: #faf6f4;
+    --bg-secondary: #f4ece8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fcf8f6;
+    --text-primary: #2a201a;
+    --text-secondary: #4a3c34;
+    --text-muted: #5a4c44;
+    --accent-primary: #a05020;
+    --accent-secondary: #803810;
+    --accent-tertiary: #8a4818;
+    --border: #e0d4cc;
+    --glow-primary: rgba(160, 80, 32, 0.1);
+    --glow-secondary: rgba(128, 56, 16, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="food"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 30% 70%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, var(--glow-secondary) 0%, transparent 45%);
+}
+
+/* ========================================
+   MUSIC - Purple Concert
+   ======================================== */
+
+[data-category="music"] {
+    --bg-primary: #0a0610;
+    --bg-secondary: #120c18;
+    --bg-card: #1c1424;
+    --bg-card-hover: #281c34;
+    --text-primary: #f8f2fc;
+    --text-secondary: #d0c0dc;
+    --text-muted: #b0a0bc;
+    --accent-primary: #c080e0;
+    --accent-secondary: #9060c0;
+    --accent-tertiary: #e0a0f0;
+    --border: #382850;
+    --glow-primary: rgba(192, 128, 224, 0.18);
+    --glow-secondary: rgba(144, 96, 192, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="music"][data-theme="light"] {
+    --bg-primary: #fcf8fc;
+    --bg-secondary: #f4ecf8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf4fc;
+    --text-primary: #201828;
+    --text-secondary: #403050;
+    --text-muted: #504060;
+    --accent-primary: #7030a0;
+    --accent-secondary: #501880;
+    --accent-tertiary: #602090;
+    --border: #dcc8e8;
+    --glow-primary: rgba(112, 48, 160, 0.1);
+    --glow-secondary: rgba(80, 24, 128, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="music"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 20% 30%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, var(--glow-secondary) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 100%, var(--glow-primary) 0%, transparent 40%);
+}
+
+/* ========================================
+   ADVENTURE - Green/Gold Explorer
+   ======================================== */
+
+[data-category="adventure"] {
+    --bg-primary: #080a08;
+    --bg-secondary: #0e1410;
+    --bg-card: #141c16;
+    --bg-card-hover: #1c281e;
+    --text-primary: #f4f8f4;
+    --text-secondary: #c0d0c4;
+    --text-muted: #a0b0a4;
+    --accent-primary: #70c890;
+    --accent-secondary: #c8a048;
+    --accent-tertiary: #90d8a8;
+    --border: #243828;
+    --glow-primary: rgba(112, 200, 144, 0.15);
+    --glow-secondary: rgba(200, 160, 72, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="adventure"][data-theme="light"] {
+    --bg-primary: #f6f8f6;
+    --bg-secondary: #ecf4ee;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f4faf6;
+    --text-primary: #1a201a;
+    --text-secondary: #3a483c;
+    --text-muted: #4a584c;
+    --accent-primary: #2a7048;
+    --accent-secondary: #8a6820;
+    --accent-tertiary: #1a6038;
+    --border: #c8d8cc;
+    --glow-primary: rgba(42, 112, 72, 0.1);
+    --glow-secondary: rgba(138, 104, 32, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="adventure"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 10% 80%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 20%, var(--glow-secondary) 0%, transparent 45%);
+}
+
+/* ========================================
+   COZY - Warm Brown Cottagecore
+   ======================================== */
+
+[data-category="cozy"] {
+    --bg-primary: #0c0a08;
+    --bg-secondary: #141210;
+    --bg-card: #1c1814;
+    --bg-card-hover: #28221c;
+    --text-primary: #f8f4f0;
+    --text-secondary: #d0c8c0;
+    --text-muted: #b0a8a0;
+    --accent-primary: #d8b888;
+    --accent-secondary: #c09868;
+    --accent-tertiary: #e8d0a8;
+    --border: #342c24;
+    --glow-primary: rgba(216, 184, 136, 0.15);
+    --glow-secondary: rgba(192, 152, 104, 0.1);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="cozy"][data-theme="light"] {
+    --bg-primary: #faf8f4;
+    --bg-secondary: #f4f0e8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fcfaf6;
+    --text-primary: #28241c;
+    --text-secondary: #484038;
+    --text-muted: #585048;
+    --accent-primary: #8a6838;
+    --accent-secondary: #705028;
+    --accent-tertiary: #7a5830;
+    --border: #dcd4c8;
+    --glow-primary: rgba(138, 104, 56, 0.1);
+    --glow-secondary: rgba(112, 80, 40, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="cozy"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 30% 30%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 70%, var(--glow-secondary) 0%, transparent 45%);
+}
+
+/* ========================================
+   CHAOS - Pink/Green Chaotic
+   ======================================== */
+
+[data-category="chaos"] {
+    --bg-primary: #0a080c;
+    --bg-secondary: #141018;
+    --bg-card: #1c1620;
+    --bg-card-hover: #28202e;
+    --text-primary: #f8f4fa;
+    --text-secondary: #d4c8dc;
+    --text-muted: #b4a8bc;
+    --accent-primary: #e878a8;
+    --accent-secondary: #78d8a0;
+    --accent-tertiary: #f098b8;
+    --border: #3c2840;
+    --glow-primary: rgba(232, 120, 168, 0.18);
+    --glow-secondary: rgba(120, 216, 160, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="chaos"][data-theme="light"] {
+    --bg-primary: #fcf8fc;
+    --bg-secondary: #f8f0f8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf6fa;
+    --text-primary: #201820;
+    --text-secondary: #483848;
+    --text-muted: #584858;
+    --accent-primary: #a03068;
+    --accent-secondary: #208850;
+    --accent-tertiary: #903060;
+    --border: #e8d0e0;
+    --glow-primary: rgba(160, 48, 104, 0.1);
+    --glow-secondary: rgba(32, 136, 80, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="chaos"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 10% 20%, var(--glow-primary) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 80%, var(--glow-secondary) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, var(--glow-primary) 0%, transparent 50%);
+}
+
+/* ========================================
+   CRYPTIDS - Teal/Indigo Mysterious
+   ======================================== */
+
+[data-category="cryptids"] {
+    --bg-primary: #060a0c;
+    --bg-secondary: #0c1214;
+    --bg-card: #121a1e;
+    --bg-card-hover: #1a2428;
+    --text-primary: #f0f4f6;
+    --text-secondary: #b8c8d0;
+    --text-muted: #98a8b0;
+    --accent-primary: #60b8c8;
+    --accent-secondary: #8090c0;
+    --accent-tertiary: #80d0d8;
+    --border: #1c2c34;
+    --glow-primary: rgba(96, 184, 200, 0.15);
+    --glow-secondary: rgba(128, 144, 192, 0.1);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="cryptids"][data-theme="light"] {
+    --bg-primary: #f4f8f8;
+    --bg-secondary: #e8f0f0;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f8f8;
+    --text-primary: #182020;
+    --text-secondary: #384848;
+    --text-muted: #485858;
+    --accent-primary: #1a6878;
+    --accent-secondary: #3a4880;
+    --accent-tertiary: #185868;
+    --border: #c8d8d8;
+    --glow-primary: rgba(26, 104, 120, 0.1);
+    --glow-secondary: rgba(58, 72, 128, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="cryptids"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 20% 80%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, var(--glow-secondary) 0%, transparent 45%);
+}
+
+/* ========================================
+   LITERARY - Burgundy Scholarly
+   ======================================== */
+
+[data-category="literary"] {
+    --bg-primary: #0c0808;
+    --bg-secondary: #141010;
+    --bg-card: #1c1616;
+    --bg-card-hover: #281e1e;
+    --text-primary: #f8f4f2;
+    --text-secondary: #d4c8c4;
+    --text-muted: #b4a8a4;
+    --accent-primary: #c88888;
+    --accent-secondary: #a06868;
+    --accent-tertiary: #d8a8a8;
+    --border: #3c2828;
+    --glow-primary: rgba(200, 136, 136, 0.15);
+    --glow-secondary: rgba(160, 104, 104, 0.1);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="literary"][data-theme="light"] {
+    --bg-primary: #faf6f4;
+    --bg-secondary: #f4ece8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fcf8f6;
+    --text-primary: #241c1c;
+    --text-secondary: #483838;
+    --text-muted: #584848;
+    --accent-primary: #8a3838;
+    --accent-secondary: #6a2020;
+    --accent-tertiary: #7a2828;
+    --border: #e0d0cc;
+    --glow-primary: rgba(138, 56, 56, 0.1);
+    --glow-secondary: rgba(106, 32, 32, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="literary"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 30% 20%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, var(--glow-secondary) 0%, transparent 45%);
+}
+
+/* ========================================
+   LOCAL - Blue Michigan
+   ======================================== */
+
+[data-category="local"] {
+    --bg-primary: #080a0c;
+    --bg-secondary: #0e1214;
+    --bg-card: #141a1e;
+    --bg-card-hover: #1c2428;
+    --text-primary: #f2f4f6;
+    --text-secondary: #c0c8d0;
+    --text-muted: #a0a8b0;
+    --accent-primary: #70a8d8;
+    --accent-secondary: #5088b8;
+    --accent-tertiary: #90c0e8;
+    --border: #243038;
+    --glow-primary: rgba(112, 168, 216, 0.15);
+    --glow-secondary: rgba(80, 136, 184, 0.1);
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-category="local"][data-theme="light"] {
+    --bg-primary: #f4f6f8;
+    --bg-secondary: #e8ecf0;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f4f8;
+    --text-primary: #1a1e22;
+    --text-secondary: #3a4248;
+    --text-muted: #4a5258;
+    --accent-primary: #1a5a8a;
+    --accent-secondary: #0a4a7a;
+    --accent-tertiary: #104a78;
+    --border: #c8d0d8;
+    --glow-primary: rgba(26, 90, 138, 0.1);
+    --glow-secondary: rgba(10, 74, 122, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-category="local"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 50% 0%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, var(--glow-secondary) 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 60%, var(--glow-primary) 0%, transparent 40%);
+}
+
+/* ========================================
+   INTERNET - Cyan Digital
+   ======================================== */
+
+[data-category="internet"] {
+    --bg-primary: #080c10;
+    --bg-secondary: #0c1218;
+    --bg-card: #101820;
+    --bg-card-hover: #162028;
+    --text-primary: #e8f4f8;
+    --text-secondary: #a8c8d8;
+    --text-muted: #7898a8;
+    --accent-primary: #40d8d0;
+    --accent-secondary: #60a8e8;
+    --accent-tertiary: #a078e8;
+    --border: #1c2830;
+    --glow-primary: rgba(64, 216, 208, 0.15);
+    --glow-secondary: rgba(96, 168, 232, 0.12);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --grid-color: rgba(64, 216, 208, 0.03);
+    --scanline-color: rgba(64, 216, 208, 0.02);
+}
+
+[data-category="internet"][data-theme="light"] {
+    --bg-primary: #f0f6f8;
+    --bg-secondary: #e0eef4;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f8fa;
+    --text-primary: #102028;
+    --text-secondary: #304850;
+    --text-muted: #506068;
+    --accent-primary: #0a8a84;
+    --accent-secondary: #2868a8;
+    --accent-tertiary: #6848a8;
+    --border: #c0d8e0;
+    --glow-primary: rgba(10, 138, 132, 0.1);
+    --glow-secondary: rgba(40, 104, 168, 0.08);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --grid-color: rgba(10, 138, 132, 0.04);
+    --scanline-color: rgba(10, 138, 132, 0.02);
+}
+
+/* Internet digital grid background */
+[data-category="internet"] .bg-effect {
+    background: 
+        radial-gradient(ellipse at 20% 30%, var(--glow-primary) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, var(--glow-secondary) 0%, transparent 45%),
+        radial-gradient(ellipse at 60% 20%, var(--glow-primary) 0%, transparent 40%);
+}
+
+[data-category="internet"] .bg-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.8;
+}
+
+[data-category="internet"] .bg-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--scanline-color) 0px,
+        var(--scanline-color) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    animation: scanlines 10s linear infinite;
+}
+
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(30px); }
+}
+
+/* Internet uses > instead of checkmark */
+[data-category="internet"] .name-item.selected::after {
+    content: '>';
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+}
+
+/* Internet selection uses mono font */
+[data-category="internet"] .selection-name {
+    font-family: 'Space Mono', monospace;
+}

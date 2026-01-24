@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Name Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark theme (default) - AAA contrast compliant */
+            --bg-primary: #0c0a14;
+            --bg-secondary: #141020;
+            --bg-card: #1a1528;
+            --bg-card-hover: #231d38;
+            --text-primary: #f5f4f8;
+            --text-secondary: #c8c4d4;
+            --text-muted: #9a96a8;
+            --accent-pink: #f0a0cc;
+            --accent-purple: #c8a8e0;
+            --accent-teal: #8ce0d0;
+            --accent-blue: #a0c8f0;
+            --accent-red: #e85555;
+            --accent-amber: #e8c060;
+            --border: #2d2640;
+            --glow-pink: rgba(232, 149, 194, 0.15);
+            --glow-purple: rgba(183, 148, 212, 0.12);
+            --glow-teal: rgba(126, 212, 196, 0.1);
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8f6fc;
+            --bg-secondary: #efedf5;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f5f2fa;
+            --text-primary: #1a1525;
+            --text-secondary: #3a3548;
+            --text-muted: #5a5568;
+            --accent-pink: #a84878;
+            --accent-purple: #6a3a8a;
+            --accent-teal: #2a7a6a;
+            --accent-blue: #3a6a9a;
+            --accent-red: #c43c3c;
+            --accent-amber: #9a7020;
+            --border: #d8d4e4;
+            --glow-pink: rgba(196, 106, 156, 0.08);
+            --glow-purple: rgba(138, 90, 171, 0.06);
+            --glow-teal: rgba(58, 148, 133, 0.06);
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', system-ui, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Synthwave background effect */
+        .bg-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, var(--glow-pink) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, var(--glow-purple) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 80%, var(--glow-teal) 0%, transparent 50%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 1rem;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            z-index: 1000;
+            border: 2px solid var(--accent-purple);
+        }
+
+        .skip-link:focus {
+            top: 1rem;
+            outline: 2px solid var(--accent-teal);
+            outline-offset: 2px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .theme-toggle-label {
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        [data-theme="light"] .toggle-switch {
+            background: var(--accent-purple);
+        }
+
+        [data-theme="light"] .toggle-switch::after {
+            transform: translateX(22px);
+            background: #ffffff;
+        }
+
+        .toggle-icons {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0 2.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 6vw, 3.2rem);
+            font-weight: 300;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Instructions */
+        .instructions {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            display: block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--card-accent, var(--accent-purple)), transparent);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .category-card:hover,
+        .category-card:focus {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .category-card:hover::before,
+        .category-card:focus::before {
+            opacity: 1;
+        }
+
+        .category-card:focus {
+            border-color: var(--accent-purple);
+            outline: 2px solid var(--accent-purple);
+            outline-offset: 2px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .card-icon {
+            font-size: 1.4rem;
+            opacity: 0.85;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding-left: 2.15rem;
+        }
+
+        /* Category-specific accent colors */
+        .category-card[data-category="celestial"] { --card-accent: #8eb8e8; }
+        .category-card[data-category="mythology"] { --card-accent: #d4a574; }
+        .category-card[data-category="nature"] { --card-accent: #7ed4a4; }
+        .category-card[data-category="retro"] { --card-accent: #e895c2; }
+        .category-card[data-category="food"] { --card-accent: #e8b895; }
+        .category-card[data-category="music"] { --card-accent: #b794d4; }
+        .category-card[data-category="adventure"] { --card-accent: #94d4b7; }
+        .category-card[data-category="cozy"] { --card-accent: #d4c494; }
+        .category-card[data-category="chaos"] { --card-accent: #d494a8; }
+        .category-card[data-category="cryptids"] { --card-accent: #94a8d4; }
+        .category-card[data-category="literary"] { --card-accent: #c9b8a8; }
+        .category-card[data-category="local"] { --card-accent: #7ed4c4; }
+
+        /* Emergency Link Section */
+        .emergency-section {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            margin-top: 2rem;
+        }
+
+        .emergency-panel {
+            display: inline-block;
+            background: linear-gradient(180deg, #3a3a40 0%, #2a2a30 50%, #1a1a20 100%);
+            border: 3px solid #4a4a52;
+            border-radius: 8px;
+            padding: 1rem 1.5rem 1.25rem;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.1),
+                0 4px 16px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        /* Corner screws on panel */
+        .emergency-panel::before,
+        .emergency-panel::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 35% 35%, #707078 0%, #48484e 60%, #38383e 100%);
+            border-radius: 50%;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), inset 0 -1px 1px rgba(0,0,0,0.3);
+            top: 8px;
+        }
+
+        .emergency-panel::before { left: 8px; }
+        .emergency-panel::after { right: 8px; }
+
+        .emergency-stripes {
+            height: 6px;
+            background: repeating-linear-gradient(
+                -45deg,
+                #e8c060,
+                #e8c060 6px,
+                #1a1a20 6px,
+                #1a1a20 12px
+            );
+            border-radius: 2px;
+            margin-bottom: 0.75rem;
+        }
+
+        .emergency-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(180deg, #2a2a30 0%, #1a1a20 100%);
+            border: 2px solid #0a0a0c;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .emergency-link:hover,
+        .emergency-link:focus {
+            background: linear-gradient(180deg, #3a3a40 0%, #2a2a30 100%);
+            border-color: var(--accent-amber);
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                0 0 12px rgba(232, 192, 96, 0.2);
+            outline: none;
+        }
+
+        .emergency-link:focus {
+            outline: 2px solid var(--accent-amber);
+            outline-offset: 3px;
+        }
+
+        .emergency-indicator {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-red);
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        [data-theme="light"] .emergency-panel {
+            background: linear-gradient(180deg, #b8b8bc 0%, #a0a0a4 50%, #909094 100%);
+            border-color: #888890;
+        }
+
+        [data-theme="light"] .emergency-stripes {
+            background: repeating-linear-gradient(
+                -45deg,
+                #c49820,
+                #c49820 6px,
+                #404044 6px,
+                #404044 12px
+            );
+        }
+
+        [data-theme="light"] .emergency-link {
+            background: linear-gradient(180deg, #404044 0%, #303034 100%);
+            border-color: #1a1a1e;
+            color: #f0f0f4;
+        }
+
+        [data-theme="light"] .emergency-link:hover,
+        [data-theme="light"] .emergency-link:focus {
+            background: linear-gradient(180deg, #505054 0%, #404044 100%);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem 1rem 3rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.4rem 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            header {
+                padding: 4rem 0 2rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-card {
+                padding: 1.25rem;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* Focus visible for keyboard navigation (fallback for elements without explicit :focus styles) */
+        .emergency-link:focus,
+        .toggle-switch:focus {
+            outline: 2px solid var(--accent-purple);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to categories</a>
+    <div class="bg-effect" aria-hidden="true"></div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="toggle-icons" aria-hidden="true">
+            <span>◐</span>
+        </span>
+        <span class="theme-toggle-label" id="theme-label">Theme: Dark</span>
+        <button class="toggle-switch" 
+                role="switch" 
+                aria-checked="false" 
+                aria-labelledby="theme-label"
+                onclick="toggleTheme()"
+                tabindex="0">
+        </button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Team Name Generator</h1>
+            <p class="subtitle">Find a name for your team</p>
+        </header>
+
+        <div class="instructions">
+            <p>Pick a category that speaks to your team. You'll get 10 random names to choose from—if nothing fits, generate a new batch!</p>
+        </div>
+
+        <main id="main-content">
+            <nav class="category-grid" aria-label="Team name categories">
+            <a href="categories/celestial.html" class="category-card" data-category="celestial">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">☽</span>
+                    <h2 class="card-title">Celestial</h2>
+                </div>
+                <p class="card-desc">Stars, moons, cosmic phenomena</p>
+            </a>
+
+            <a href="categories/mythology.html" class="category-card" data-category="mythology">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">ψ</span>
+                    <h2 class="card-title">Mythology</h2>
+                </div>
+                <p class="card-desc">Legends, heroes, mythical creatures</p>
+            </a>
+
+            <a href="categories/nature.html" class="category-card" data-category="nature">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">❧</span>
+                    <h2 class="card-title">Nature & Animals</h2>
+                </div>
+                <p class="card-desc">Wildlife, weather, the natural world</p>
+            </a>
+
+            <a href="categories/retro.html" class="category-card" data-category="retro">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">◈</span>
+                    <h2 class="card-title">Retro & Nostalgia</h2>
+                </div>
+                <p class="card-desc">80s, 90s, vintage vibes</p>
+            </a>
+
+            <a href="categories/food.html" class="category-card" data-category="food">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">◉</span>
+                    <h2 class="card-title">Food & Drink</h2>
+                </div>
+                <p class="card-desc">Comfort food, snacks, culinary chaos</p>
+            </a>
+
+            <a href="categories/music.html" class="category-card" data-category="music">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">♪</span>
+                    <h2 class="card-title">Music & Band Vibes</h2>
+                </div>
+                <p class="card-desc">Concert energy, album titles, rock on</p>
+            </a>
+
+            <a href="categories/adventure.html" class="category-card" data-category="adventure">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">⌖</span>
+                    <h2 class="card-title">Adventure & Quest</h2>
+                </div>
+                <p class="card-desc">Explorers, maps, the journey ahead</p>
+            </a>
+
+            <a href="categories/cozy.html" class="category-card" data-category="cozy">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">❋</span>
+                    <h2 class="card-title">Cozy & Cottagecore</h2>
+                </div>
+                <p class="card-desc">Warm, soft, gentle aesthetics</p>
+            </a>
+
+            <a href="categories/chaos.html" class="category-card" data-category="chaos">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">⌬</span>
+                    <h2 class="card-title">Chaos Gremlins</h2>
+                </div>
+                <p class="card-desc">Chaotic energy, feral vibes, unhinged</p>
+            </a>
+
+            <a href="categories/cryptids.html" class="category-card" data-category="cryptids">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">◬</span>
+                    <h2 class="card-title">Cryptids & Folklore</h2>
+                </div>
+                <p class="card-desc">Bigfoot, Mothman, mysterious creatures</p>
+            </a>
+
+            <a href="categories/literary.html" class="category-card" data-category="literary">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">§</span>
+                    <h2 class="card-title">Literary & Academia</h2>
+                </div>
+                <p class="card-desc">Books, writing, scholarly vibes</p>
+            </a>
+
+            <a href="categories/local.html" class="category-card" data-category="local">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">◇</span>
+                    <h2 class="card-title">Local Flavor</h2>
+                </div>
+                <p class="card-desc">Michigan, Macomb, our turf</p>
+            </a>
+
+            <a href="categories/internet.html" class="category-card" data-category="internet">
+                <div class="card-header">
+                    <span class="card-icon" aria-hidden="true">@</span>
+                    <h2 class="card-title">Internet Culture</h2>
+                </div>
+                <p class="card-desc">Chronically online, touch grass energy</p>
+            </a>
+        </nav>
+
+            <div class="emergency-section">
+                <div class="emergency-panel">
+                    <div class="emergency-stripes" aria-hidden="true"></div>
+                    <a href="emergency.html" class="emergency-link" aria-label="Can't decide? Get a random team name assigned">
+                        <span class="emergency-indicator" aria-hidden="true"></span>
+                        Can't Decide?
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Pick something fun. It's just a name.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update toggle state
+            const toggle = document.querySelector('.toggle-switch');
+            const label = document.getElementById('theme-label');
+            toggle.setAttribute('aria-checked', newTheme === 'light');
+            label.textContent = newTheme === 'light' ? 'Theme: Light' : 'Theme: Dark';
+        }
+
+        // Load saved theme or default to dark
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const toggle = document.querySelector('.toggle-switch');
+            const label = document.getElementById('theme-label');
+            toggle.setAttribute('aria-checked', savedTheme === 'light');
+            label.textContent = savedTheme === 'light' ? 'Theme: Light' : 'Theme: Dark';
+        }
+
+        // Keyboard support for toggle
+        document.querySelector('.toggle-switch').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+
+        // Initialize
+        loadTheme();
+    </script>
+</body>
+</html>

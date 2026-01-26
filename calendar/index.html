@@ -12,9 +12,18 @@
 <body>
   <div class="app-container">
     
-    <!-- Compact Header with inline tabs -->
+    <!-- Compact Header with inline tabs and class selector -->
     <header class="app-header">
       <h1 class="app-title">Class Calendars</h1>
+      
+      <!-- Class Selector - inline in header -->
+      <div class="header-class-selector">
+        <div class="selector-actions">
+          <button type="button" class="filter-action-btn show-all-btn">All</button>
+          <button type="button" class="filter-action-btn hide-all-btn">None</button>
+        </div>
+        <div class="class-groups" id="headerClassGroups"></div>
+      </div>
       
       <nav class="header-tabs">
         <button type="button" class="tab-btn active" data-tab="fullViewTab">Full</button>
@@ -24,14 +33,14 @@
       </nav>
       
       <div class="header-controls">
-        <div class="control-group">
-          <span class="control-label">Size:</span>
-          <button type="button" class="control-btn font-btn size-small" data-size="small">A</button>
-          <button type="button" class="control-btn font-btn size-medium" data-size="medium">A</button>
-          <button type="button" class="control-btn font-btn size-large" data-size="large">A</button>
-          <button type="button" class="control-btn font-btn size-xlarge" data-size="x-large">A</button>
-        </div>
         <button type="button" id="themeToggle" class="control-btn">☾ Dark</button>
+        <div class="control-group">
+          <span class="control-label">Aa</span>
+          <button type="button" class="control-btn font-btn size-small" data-size="small">S</button>
+          <button type="button" class="control-btn font-btn size-medium" data-size="medium">M</button>
+          <button type="button" class="control-btn font-btn size-large" data-size="large">L</button>
+          <button type="button" class="control-btn font-btn size-xlarge" data-size="x-large">XL</button>
+        </div>
       </div>
     </header>
     
@@ -46,17 +55,6 @@
       
       <!-- Full View Tab -->
       <div class="tab-content active" id="fullViewTab">
-        <!-- Class Selector Bar -->
-        <div class="class-selector-bar">
-          <div class="class-selector-inner">
-            <div class="selector-actions">
-              <button type="button" class="filter-action-btn show-all-btn">All</button>
-              <button type="button" class="filter-action-btn hide-all-btn">None</button>
-            </div>
-            <div class="class-groups" id="classGroups"></div>
-          </div>
-        </div>
-        
         <div class="full-calendar-view">
           <!-- Month Grid (Left) -->
           <section class="month-section">
@@ -98,17 +96,6 @@
       
       <!-- Focus View Tab (3 weeks) -->
       <div class="tab-content" id="focusViewTab">
-        <!-- Class Selector Bar -->
-        <div class="class-selector-bar">
-          <div class="class-selector-inner">
-            <div class="selector-actions">
-              <button type="button" class="filter-action-btn show-all-btn">All</button>
-              <button type="button" class="filter-action-btn hide-all-btn">None</button>
-            </div>
-            <div class="class-groups" id="focusClassGroups"></div>
-          </div>
-        </div>
-        
         <div class="focus-calendar-view">
           <!-- 3 Week Grid (Left) -->
           <section class="focus-section">
@@ -265,6 +252,22 @@
           <div class="event-modal-description-label">Notes</div>
           <div class="event-modal-description-text"></div>
         </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Day Detail Modal (shows all events for a day) -->
+  <div class="day-modal-overlay" id="dayModalOverlay">
+    <div class="day-modal" role="dialog" aria-labelledby="dayModalTitle">
+      <div class="day-modal-header">
+        <div class="day-modal-title-section">
+          <h2 class="day-modal-title" id="dayModalTitle">Monday, January 26</h2>
+          <div class="day-modal-subtitle" id="dayModalSubtitle">3 events</div>
+        </div>
+        <button type="button" class="day-modal-close" aria-label="Close">×</button>
+      </div>
+      <div class="day-modal-body">
+        <div class="day-modal-events" id="dayModalEvents"></div>
       </div>
     </div>
   </div>

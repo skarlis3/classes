@@ -273,9 +273,17 @@
 
 .day-more {
   font-size: var(--font-size-xs);
-  color: var(--text-muted);
+  color: var(--accent-primary);
   padding: 2px 6px;
   font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.day-more:hover {
+  background: var(--bg-hover);
+  color: var(--accent-hover);
 }
 
 /* =============================================================================

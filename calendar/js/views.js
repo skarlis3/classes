@@ -182,15 +182,34 @@ const CalendarViews = {
     
     container.innerHTML = html;
     
-    // Add click handlers for days (to select week)
+    // Add click handlers for days - clicking day opens day modal
     container.querySelectorAll('.month-day').forEach(dayEl => {
       dayEl.addEventListener('click', (e) => {
-        // Don't select week if clicking on an event
+        // Don't open day modal if clicking on an event
         if (e.target.closest('.day-event')) return;
         
         const date = new Date(dayEl.dataset.date);
-        this.selectedWeekStart = this.getWeekStart(date);
-        this.renderFullView();
+        const dayEvents = this.getEventsForDay(date);
+        
+        // If there are events, show day modal; otherwise select week
+        if (dayEvents.length > 0) {
+          this.showDayModal(date);
+        } else {
+          this.selectedWeekStart = this.getWeekStart(date);
+          this.renderFullView();
+        }
+      });
+    });
+    
+    // Add click handlers for "+X more" links
+    container.querySelectorAll('.day-more').forEach(moreEl => {
+      moreEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dayEl = moreEl.closest('.month-day');
+        if (dayEl) {
+          const date = new Date(dayEl.dataset.date);
+          this.showDayModal(date);
+        }
       });
     });
     
@@ -401,6 +420,33 @@ const CalendarViews = {
     }
     
     container.innerHTML = html;
+    
+    // Add click handlers for days - clicking day opens day modal
+    container.querySelectorAll('.month-day').forEach(dayEl => {
+      dayEl.addEventListener('click', (e) => {
+        // Don't open day modal if clicking on an event
+        if (e.target.closest('.day-event')) return;
+        
+        const date = new Date(dayEl.dataset.date);
+        const dayEvents = this.getEventsForDay(date);
+        
+        if (dayEvents.length > 0) {
+          this.showDayModal(date);
+        }
+      });
+    });
+    
+    // Add click handlers for "+X more" links
+    container.querySelectorAll('.day-more').forEach(moreEl => {
+      moreEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dayEl = moreEl.closest('.month-day');
+        if (dayEl) {
+          const date = new Date(dayEl.dataset.date);
+          this.showDayModal(date);
+        }
+      });
+    });
     
     // Add click handlers for events
     container.querySelectorAll('.day-event').forEach(eventEl => {
@@ -844,27 +890,134 @@ const CalendarViews = {
     }
   },
   
-  initModalListeners() {
-    const overlay = document.getElementById('eventModalOverlay');
+  // =========================================================================
+  // Day Detail Modal - Shows all events for a day
+  // =========================================================================
+  
+  showDayModal(date) {
+    const overlay = document.getElementById('dayModalOverlay');
     if (!overlay) return;
     
-    // Close button
-    const closeBtn = overlay.querySelector('.event-modal-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => this.hideEventModal());
+    const dayEvents = this.getEventsForDay(date);
+    const isToday = this.isToday(date);
+    
+    // Format date for title
+    const titleEl = overlay.querySelector('.day-modal-title');
+    const subtitleEl = overlay.querySelector('.day-modal-subtitle');
+    const eventsContainer = overlay.querySelector('.day-modal-events');
+    
+    if (titleEl) {
+      const dayName = isToday ? 'Today' : this.dayNamesFull[date.getDay()];
+      titleEl.textContent = `${dayName}, ${this.monthNames[date.getMonth()]} ${date.getDate()}`;
     }
     
-    // Click outside to close
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        this.hideEventModal();
-      }
-    });
+    if (subtitleEl) {
+      const count = dayEvents.length;
+      subtitleEl.textContent = count === 0 ? 'No events' : `${count} event${count === 1 ? '' : 's'}`;
+    }
     
-    // Escape key to close
+    if (eventsContainer) {
+      if (dayEvents.length === 0) {
+        eventsContainer.innerHTML = '<div class="day-modal-no-events">No events scheduled for this day</div>';
+      } else {
+        eventsContainer.innerHTML = dayEvents.map((event, index) => {
+          const eventId = `day-modal-${event.calendarId}-${event.id || index}`;
+          this.eventCache = this.eventCache || {};
+          this.eventCache[eventId] = event;
+          
+          const calendar = CONFIG.CALENDARS.find(c => c.id === event.calendarId);
+          
+          return `
+            <div class="day-modal-event ${event.colorClass}" 
+                 data-event-id="${eventId}"
+                 role="button"
+                 tabindex="0">
+              <div class="day-modal-event-title">${this.escapeHtml(event.summary)}</div>
+              <div class="day-modal-event-time">${this.formatTime(event)}</div>
+              <div class="day-modal-event-calendar">${calendar?.name || ''}</div>
+            </div>
+          `;
+        }).join('');
+        
+        // Add click handlers for events
+        eventsContainer.querySelectorAll('.day-modal-event').forEach(eventEl => {
+          const handler = (e) => {
+            const eventId = eventEl.dataset.eventId;
+            const event = this.eventCache?.[eventId];
+            if (event) {
+              this.hideDayModal();
+              setTimeout(() => this.showEventModal(event), 150);
+            }
+          };
+          
+          eventEl.addEventListener('click', handler);
+          eventEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handler(e);
+            }
+          });
+        });
+      }
+    }
+    
+    // Show modal
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus close button for accessibility
+    const closeBtn = overlay.querySelector('.day-modal-close');
+    if (closeBtn) closeBtn.focus();
+  },
+  
+  hideDayModal() {
+    const overlay = document.getElementById('dayModalOverlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+  
+  initModalListeners() {
+    // Event modal listeners
+    const eventOverlay = document.getElementById('eventModalOverlay');
+    if (eventOverlay) {
+      const closeBtn = eventOverlay.querySelector('.event-modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => this.hideEventModal());
+      }
+      
+      eventOverlay.addEventListener('click', (e) => {
+        if (e.target === eventOverlay) {
+          this.hideEventModal();
+        }
+      });
+    }
+    
+    // Day modal listeners
+    const dayOverlay = document.getElementById('dayModalOverlay');
+    if (dayOverlay) {
+      const closeBtn = dayOverlay.querySelector('.day-modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => this.hideDayModal());
+      }
+      
+      dayOverlay.addEventListener('click', (e) => {
+        if (e.target === dayOverlay) {
+          this.hideDayModal();
+        }
+      });
+    }
+    
+    // Escape key to close any modal
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.classList.contains('active')) {
-        this.hideEventModal();
+      if (e.key === 'Escape') {
+        if (eventOverlay?.classList.contains('active')) {
+          this.hideEventModal();
+        }
+        if (dayOverlay?.classList.contains('active')) {
+          this.hideDayModal();
+        }
       }
     });
   }

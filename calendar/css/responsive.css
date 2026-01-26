@@ -38,20 +38,18 @@
     border-bottom: 1px solid var(--border-light);
   }
   
-  .class-selector-bar {
-    padding: var(--space-xs) var(--space-sm);
-  }
-  
-  .class-selector-inner {
+  /* Header stacks on smaller screens */
+  .app-header {
     flex-wrap: wrap;
     gap: var(--space-xs);
   }
   
-  .selector-actions {
+  .header-class-selector {
+    order: 10;
     width: 100%;
-    justify-content: flex-end;
-    order: -1;
-    margin-bottom: var(--space-xs);
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--border-light);
+    margin-top: var(--space-xs);
   }
 }
 

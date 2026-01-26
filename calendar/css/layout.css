@@ -192,41 +192,42 @@ button {
 }
 
 /* =============================================================================
-   CLASS SELECTOR BAR - Horizontal grouped selector
+   HEADER CLASS SELECTOR - Inline in header
    ============================================================================= */
-.class-selector-bar {
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-light);
-  padding: var(--space-sm) var(--space-md);
-  flex-shrink: 0;
-}
-
-.class-selector-inner {
+.header-class-selector {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
+  flex: 1;
+  min-width: 0;
 }
 
-.selector-actions {
+.header-class-selector .selector-actions {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   flex-shrink: 0;
 }
 
-.class-groups {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-  flex: 1;
+.header-class-selector .selector-actions .filter-action-btn {
+  padding: 4px 10px;
+  font-size: var(--font-size-xs);
 }
 
-/* Individual class group card */
+.header-class-selector .class-groups {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Individual class group card - compact for header */
 .class-group {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: var(--radius-lg);
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
   background: var(--bg-tertiary);
   border: 2px solid transparent;
   transition: all var(--transition-fast);
@@ -242,12 +243,11 @@ button {
 
 /* Class number label */
 .class-group-label {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: 800;
   color: var(--text-primary);
   padding-right: 6px;
   border-right: 2px solid var(--border-light);
-  margin-right: 2px;
 }
 
 .class-group.no-events .class-group-label {
@@ -257,15 +257,15 @@ button {
 /* Section toggles within group */
 .class-group-sections {
   display: flex;
-  gap: 4px;
+  gap: 2px;
 }
 
 .section-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: var(--radius-md);
+  gap: 3px;
+  padding: 2px 6px;
+  border-radius: 6px;
   font-size: var(--font-size-xs);
   font-weight: 700;
   border: 2px solid transparent;
@@ -286,8 +286,8 @@ button {
 }
 
 .section-toggle .section-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -358,7 +358,7 @@ button {
   color: var(--cal-2740-primary-text);
 }
 
-/* Compact groups - vertical layout */
+/* Compact groups in sidebar - vertical layout */
 .compact-groups {
   flex-direction: column;
   gap: 6px;
@@ -738,5 +738,142 @@ button {
 .event-modal-no-description {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
+  font-style: italic;
+}
+
+/* =============================================================================
+   DAY DETAIL MODAL - Shows all events for a day
+   ============================================================================= */
+.day-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+  padding: var(--space-md);
+}
+
+.day-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.day-modal {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.day-modal-overlay.active .day-modal {
+  transform: scale(1) translateY(0);
+}
+
+.day-modal-header {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-tertiary);
+}
+
+.day-modal-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.day-modal-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.day-modal-subtitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.day-modal-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xl);
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.day-modal-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.day-modal-body {
+  padding: var(--space-md);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.day-modal-events {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.day-modal-event {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border-left: 4px solid;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.day-modal-event:hover {
+  transform: translateX(4px);
+  opacity: 0.9;
+}
+
+.day-modal-event-title {
+  font-weight: 600;
+  color: inherit;
+  margin-bottom: 2px;
+}
+
+.day-modal-event-time {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+}
+
+.day-modal-event-calendar {
+  font-size: var(--font-size-xs);
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.day-modal-no-events {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-lg);
   font-style: italic;
 }

@@ -22,9 +22,8 @@ const CalendarFilters = {
     // Activate all calendars with events by default
     this.activeCalendars = new Set(this.calendarsWithEvents);
     
-    // Render grouped selectors in all containers
-    this.renderGroupedToggles('classGroups');
-    this.renderGroupedToggles('focusClassGroups');
+    // Render grouped selectors - header is primary, compact is secondary
+    this.renderGroupedToggles('headerClassGroups');
     this.renderGroupedToggles('compactClassGroups');
   },
   

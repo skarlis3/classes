@@ -45,83 +45,83 @@
 [data-font-size="x-large"] { --font-size-base: 20px; }
 
 /* =============================================================================
-   LIGHT THEME - Muted Pastels
+   LIGHT THEME - Cool Greens, Teals, Purple-Blues
    ============================================================================= */
 [data-theme="light"] {
-  --bg-primary: #FBF8F6;
+  --bg-primary: #F8FAFA;
   --bg-secondary: #FFFFFF;
-  --bg-tertiary: #F5F0ED;
-  --bg-hover: #EDE6E1;
-  --bg-selected: #E8E0F5;
+  --bg-tertiary: #EEF4F3;
+  --bg-hover: #E4EDEB;
+  --bg-selected: #E0EBF0;
   
   /* Warm neutrals for text - AAA compliant */
-  --text-primary: #2D2A26;
-  --text-secondary: #4A4540;
-  --text-muted: #6B6560;
+  --text-primary: #1F2D2B;
+  --text-secondary: #3A4A48;
+  --text-muted: #5A6B68;
   --text-on-accent: #FFFFFF;
   
-  --border-light: #E5DDD6;
-  --border-medium: #D4C9C0;
+  --border-light: #D5E0DE;
+  --border-medium: #B8C8C5;
   
-  /* Accent - soft coral/rose */
-  --accent-primary: #C97B84;
-  --accent-hover: #B86B74;
+  /* Accent - teal */
+  --accent-primary: #4A8F85;
+  --accent-hover: #3D7A71;
   
-  /* Title gradient */
-  --title-gradient: linear-gradient(135deg, #D4A5A5 0%, #C9B8A8 50%, #A8C4B8 100%);
+  /* Title gradient - teals and purple-blues */
+  --title-gradient: linear-gradient(135deg, #6B9E8E 0%, #7A9EB0 50%, #8E8EAE 100%);
   
-  /* Header background - subtle warm gradient */
-  --header-bg: linear-gradient(135deg, #FBF8F6 0%, #F5EDE8 100%);
+  /* Header background - subtle cool gradient */
+  --header-bg: linear-gradient(135deg, #F8FAFA 0%, #EFF5F4 100%);
   
   /* Card shadows */
-  --shadow-sm: 0 2px 8px rgba(45, 42, 38, 0.06);
-  --shadow-md: 0 4px 16px rgba(45, 42, 38, 0.08);
+  --shadow-sm: 0 2px 8px rgba(30, 50, 45, 0.06);
+  --shadow-md: 0 4px 16px rgba(30, 50, 45, 0.08);
   
-  /* Calendar event colors - soft pastels */
-  /* 1170 - Dusty Rose / Mauve */
-  --cal-1170-primary-border: #B07D8E;
-  --cal-1170-primary-bg: #F8EEF1;
-  --cal-1170-primary-text: #7A4A5A;
-  --cal-1170-secondary-border: #C9A0B0;
-  --cal-1170-secondary-bg: #FCF4F7;
-  --cal-1170-secondary-text: #8B5A6B;
+  /* Calendar event colors - AAA contrast (7:1 minimum) */
+  /* 1170 - Dusty Plum / Mauve (keeping for distinction) */
+  --cal-1170-primary-border: #8B6B7A;
+  --cal-1170-primary-bg: #F5EEF2;
+  --cal-1170-primary-text: #4A3040;
+  --cal-1170-secondary-border: #A888A0;
+  --cal-1170-secondary-bg: #F8F2F6;
+  --cal-1170-secondary-text: #503848;
   
-  /* 1181 - Sage / Moss / Sky */
-  --cal-1181-primary-border: #6B8E7A;
-  --cal-1181-primary-bg: #EEF5F0;
-  --cal-1181-primary-text: #3D5A4A;
-  --cal-1181-secondary-border: #8FB174;
-  --cal-1181-secondary-bg: #F2F8ED;
-  --cal-1181-secondary-text: #4A6B3D;
-  --cal-1181-tertiary-border: #6B9EAE;
-  --cal-1181-tertiary-bg: #EDF5F8;
-  --cal-1181-tertiary-text: #3D5A6B;
+  /* 1181 - Forest / Moss / Teal */
+  --cal-1181-primary-border: #5A8A70;
+  --cal-1181-primary-bg: #ECF5F0;
+  --cal-1181-primary-text: #1E4030;
+  --cal-1181-secondary-border: #7AAA60;
+  --cal-1181-secondary-bg: #F0F6EA;
+  --cal-1181-secondary-text: #2A4820;
+  --cal-1181-tertiary-border: #5090A0;
+  --cal-1181-tertiary-bg: #EAF4F6;
+  --cal-1181-tertiary-text: #1A4050;
   
-  /* 1190 - Periwinkle / Soft Blue */
-  --cal-1190-primary-border: #7A85B0;
-  --cal-1190-primary-bg: #F0F1F8;
-  --cal-1190-primary-text: #4A507A;
-  --cal-1190-secondary-border: #9AA4C9;
-  --cal-1190-secondary-bg: #F4F5FC;
-  --cal-1190-secondary-text: #5A6085;
+  /* 1190 - Periwinkle / Slate Blue */
+  --cal-1190-primary-border: #6878A8;
+  --cal-1190-primary-bg: #EEEEF6;
+  --cal-1190-primary-text: #2A3058;
+  --cal-1190-secondary-border: #8898C0;
+  --cal-1190-secondary-bg: #F2F2F8;
+  --cal-1190-secondary-text: #303860;
   
-  /* 2740 - Terracotta / Warm Earth */
-  --cal-2740-primary-border: #B08060;
-  --cal-2740-primary-bg: #F8F0EA;
-  --cal-2740-primary-text: #7A5030;
-  --cal-2740-secondary-border: #C9A080;
-  --cal-2740-secondary-bg: #FCF6F0;
-  --cal-2740-secondary-text: #8B6040;
+  /* 2740 - Warm Earth / Sienna */
+  --cal-2740-primary-border: #A07050;
+  --cal-2740-primary-bg: #F6F0EA;
+  --cal-2740-primary-text: #4A3020;
+  --cal-2740-secondary-border: #B88868;
+  --cal-2740-secondary-bg: #F8F4EE;
+  --cal-2740-secondary-text: #503828;
   
   /* Calendar UI colors */
-  --today-bg: #F5EDE8;
-  --today-border: #C97B84;
-  --today-number-bg: #C97B84;
+  --today-bg: #E8F2F0;
+  --today-border: #4A8F85;
+  --today-number-bg: #4A8F85;
   --today-number-text: #FFFFFF;
-  --selected-week-bg: #F8F4F0;
-  --other-month-text: #A09890;
-  --other-month-bg: #F8F5F2;
-  --event-dot: #C97B84;
+  --selected-week-bg: #F0F6F5;
+  --other-month-text: #90A0A0;
+  --other-month-bg: #F5F8F8;
+  --event-dot: #4A8F85;
 }
 
 /* =============================================================================

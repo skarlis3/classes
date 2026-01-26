@@ -7,6 +7,38 @@ const App = {
     this.loadPreferences();
     this.setupEventListeners();
     await this.loadCalendarData();
+    this.handleResponsiveView();
+  },
+  
+  // Detect screen size and auto-switch view on small screens
+  handleResponsiveView() {
+    const checkSize = () => {
+      const width = window.innerWidth;
+      const savedView = localStorage.getItem('calendarView');
+      
+      // Only auto-switch if user hasn't manually chosen a view
+      if (!savedView) {
+        if (width <= 700) {
+          // Phone: default to Compact
+          this.switchTab('compactViewTab', true);
+        } else if (width <= 900) {
+          // Tablet: default to Focus (already set in HTML)
+          this.switchTab('focusViewTab', true);
+        }
+      }
+    };
+    
+    // Check on load
+    checkSize();
+    
+    // Optionally check on resize (debounced)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Don't auto-switch on resize if user has chosen a view
+      }, 250);
+    });
   },
   
   loadPreferences() {
@@ -17,6 +49,17 @@ const App = {
     const savedFontSize = localStorage.getItem('calendarFontSize') || 'medium';
     document.documentElement.setAttribute('data-font-size', savedFontSize);
     this.updateFontSizeButtons(savedFontSize);
+    
+    // Restore saved view if exists
+    const savedView = localStorage.getItem('calendarView');
+    if (savedView) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === savedView);
+      });
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === savedView);
+      });
+    }
   },
   
   setupEventListeners() {
@@ -96,6 +139,8 @@ const App = {
       CalendarFilters.init(data);
       CalendarViews.init(data);
       
+      // Render all views (Focus is default)
+      CalendarViews.renderFocusView();
       CalendarViews.renderFullView();
       CalendarViews.renderCompactView();
       
@@ -139,7 +184,7 @@ const App = {
     });
   },
   
-  switchTab(tabId) {
+  switchTab(tabId, isAuto = false) {
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
@@ -147,6 +192,11 @@ const App = {
     document.querySelectorAll('.tab-content').forEach(content => {
       content.classList.toggle('active', content.id === tabId);
     });
+    
+    // Save preference if user manually switched (not auto-responsive)
+    if (!isAuto) {
+      localStorage.setItem('calendarView', tabId);
+    }
     
     if (tabId === 'fullViewTab') {
       CalendarViews.renderFullView();

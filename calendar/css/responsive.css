@@ -10,8 +10,9 @@
   }
 }
 
-/* Smaller screens - stack layout */
+/* Tablet (iPad mini portrait ~768px) */
 @media (max-width: 900px) {
+  /* Stack main calendar views */
   .full-calendar-view,
   .focus-calendar-view {
     grid-template-columns: 1fr;
@@ -28,20 +29,58 @@
     max-height: 40vh;
   }
   
+  /* Compact view - flip layout: agenda on top, mini calendar below */
   .compact-calendar-view {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr auto;
   }
   
   .mini-month-section {
     border-right: none;
-    border-bottom: 1px solid var(--border-light);
+    border-top: 1px solid var(--border-light);
+    order: 2; /* Push mini calendar below agenda */
+    max-height: 180px; /* Shorter mini calendar */
+    overflow-y: auto;
+    padding: var(--space-xs);
+  }
+  
+  .agenda-section {
+    order: 1; /* Agenda first */
+    border-bottom: none;
+    min-height: 0;
+    flex: 1;
+  }
+  
+  /* Shrink mini calendar grid significantly */
+  .mini-month-grid {
+    padding: var(--space-xs);
+    gap: 1px;
+    font-size: var(--font-size-xs);
+  }
+  
+  .mini-day {
+    font-size: 0.7rem;
+    padding: 2px;
+  }
+  
+  .mini-month-header {
+    padding: var(--space-xs);
+  }
+  
+  .mini-month-title {
+    font-size: var(--font-size-sm);
+  }
+  
+  /* Hide compact filters on tablet - use header selector instead */
+  .compact-filters {
+    display: none;
   }
   
   /* Header stacks on smaller screens */
   .app-header {
     flex-wrap: wrap;
     gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
   }
   
   .header-class-selector {
@@ -50,10 +89,29 @@
     padding-top: var(--space-xs);
     border-top: 1px solid var(--border-light);
     margin-top: var(--space-xs);
+    overflow-x: auto;
+  }
+  
+  .header-class-selector .class-groups {
+    flex-wrap: nowrap;
+  }
+  
+  /* Reduce focus grid to show fewer events but larger */
+  .focus-days .day-event {
+    -webkit-line-clamp: 2;
+  }
+  
+  /* Make agenda events more prominent */
+  .agenda-event {
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .agenda-event-title {
+    font-size: var(--font-size-base);
   }
 }
 
-/* Small screens - adjust header */
+/* Small tablets / large phones */
 @media (max-width: 700px) {
   .app-header {
     flex-wrap: wrap;
@@ -61,7 +119,7 @@
   }
   
   .app-title {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-lg);
   }
   
   .header-tabs {
@@ -69,6 +127,10 @@
     width: 100%;
     justify-content: center;
     margin-top: var(--space-xs);
+  }
+  
+  .header-controls {
+    order: 2;
   }
   
   .month-header {
@@ -81,27 +143,44 @@
     width: 100%;
   }
   
+  /* Smaller class group buttons */
   .class-group {
-    padding: 4px 8px;
+    padding: 3px 6px;
   }
   
   .class-group-label {
-    font-size: var(--font-size-xs);
+    font-size: 0.7rem;
     padding-right: 4px;
   }
   
   .section-toggle {
-    padding: 3px 6px;
-    font-size: 0.7rem;
+    padding: 2px 4px;
+    font-size: 0.65rem;
   }
   
   .section-toggle .section-dot {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
+  }
+  
+  /* Day events */
+  .day-event {
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    -webkit-line-clamp: 2;
+  }
+  
+  /* Compact filters in sidebar */
+  .compact-filters {
+    padding: var(--space-xs);
+  }
+  
+  .compact-groups .class-group {
+    padding: 4px 6px;
   }
 }
 
-/* Very small screens */
+/* Phone screens */
 @media (max-width: 500px) {
   .header-controls {
     gap: var(--space-xs);
@@ -128,6 +207,23 @@
     font-size: 0.65rem;
     padding: 1px 4px;
     -webkit-line-clamp: 1;
+  }
+  
+  /* Hide class selector on very small screens, keep All/None */
+  .header-class-selector .class-groups {
+    display: none;
+  }
+  
+  .compact-groups {
+    display: flex !important;
+  }
+  
+  /* Make modals full-width */
+  .event-modal,
+  .day-modal {
+    max-width: 100%;
+    margin: var(--space-sm);
+    max-height: 90vh;
   }
 }
 

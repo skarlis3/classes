@@ -56,7 +56,7 @@ const CONFIG = {
     {
       id: '1190-mw',
       name: 'ENGL 1190 Mon/Wed',
-      calendarId: '39ba7ac909903e1b6b3698153819e6a813638bb279c7c14295dec343b7b9464e@group.calendar.google.com',
+      calendarId: '5ccac57e3b214413edfd731d32b4be4514c614f17bc034f363e61107d16c75f6@group.calendar.google.com',
       colorClass: 'cal-1190-primary'
     },
     {

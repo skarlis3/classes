@@ -64,25 +64,24 @@
   --accent-hover: #1E40AF;
   
   /* Calendar event colors - left border style for AAA compliance */
-  /* 1170 - Purples */
-  --cal-1170-primary-border: #6D28D9;
-  --cal-1170-primary-bg: #F5F3FF;
+  /* 1170 - Purples: primary=deep violet, secondary=magenta/pink-purple */
+  --cal-1170-primary-border: #5B21B6;
+  --cal-1170-primary-bg: #EDE9FE;
   --cal-1170-primary-text: #4C1D95;
-  --cal-1170-secondary-border: #8B5CF6;
-  --cal-1170-secondary-bg: #F5F3FF;
-  --cal-1170-secondary-text: #5B21B6;
+  --cal-1170-secondary-border: #A855F7;
+  --cal-1170-secondary-bg: #FAE8FF;
+  --cal-1170-secondary-text: #86198F;
   
-  /* 1181 - Greens (primary/secondary) and Cyan (tertiary) */
-  --cal-1181-primary-border: #047857;
-  --cal-1181-primary-bg: #ECFDF5;
-  --cal-1181-primary-text: #065F46;
-  --cal-1181-secondary-border: #16A34A;
-  --cal-1181-secondary-bg: #F0FDF4;
-  --cal-1181-secondary-text: #166534;
-  /* Tertiary is now distinctly CYAN/TEAL */
-  --cal-1181-tertiary-border: #0891B2;
-  --cal-1181-tertiary-bg: #ECFEFF;
-  --cal-1181-tertiary-text: #0E7490;
+  /* 1181 - primary=dark emerald, secondary=bright lime, tertiary=sky blue */
+  --cal-1181-primary-border: #065F46;
+  --cal-1181-primary-bg: #D1FAE5;
+  --cal-1181-primary-text: #064E3B;
+  --cal-1181-secondary-border: #65A30D;
+  --cal-1181-secondary-bg: #ECFCCB;
+  --cal-1181-secondary-text: #3F6212;
+  --cal-1181-tertiary-border: #0284C7;
+  --cal-1181-tertiary-bg: #E0F2FE;
+  --cal-1181-tertiary-text: #075985;
   
   /* 1190 - Blues */
   --cal-1190-primary-border: #1D4ED8;
@@ -134,25 +133,24 @@
   --accent-hover: #93C5FD;
   
   /* Calendar event colors - softer for dark mode, maintaining contrast */
-  /* 1170 - Purples */
+  /* 1170 - Purples: primary=deep violet, secondary=magenta/pink-purple */
   --cal-1170-primary-border: #A78BFA;
   --cal-1170-primary-bg: #1E1533;
   --cal-1170-primary-text: #C4B5FD;
-  --cal-1170-secondary-border: #C4B5FD;
-  --cal-1170-secondary-bg: #1E1533;
-  --cal-1170-secondary-text: #DDD6FE;
+  --cal-1170-secondary-border: #E879F9;
+  --cal-1170-secondary-bg: #2E1338;
+  --cal-1170-secondary-text: #F0ABFC;
   
-  /* 1181 - Greens and Cyan */
+  /* 1181 - primary=emerald, secondary=lime, tertiary=sky blue */
   --cal-1181-primary-border: #34D399;
   --cal-1181-primary-bg: #132620;
   --cal-1181-primary-text: #6EE7B7;
-  --cal-1181-secondary-border: #4ADE80;
-  --cal-1181-secondary-bg: #14261A;
-  --cal-1181-secondary-text: #86EFAC;
-  /* Tertiary is now distinctly CYAN */
-  --cal-1181-tertiary-border: #22D3EE;
-  --cal-1181-tertiary-bg: #132633;
-  --cal-1181-tertiary-text: #67E8F9;
+  --cal-1181-secondary-border: #A3E635;
+  --cal-1181-secondary-bg: #1A2612;
+  --cal-1181-secondary-text: #BEF264;
+  --cal-1181-tertiary-border: #38BDF8;
+  --cal-1181-tertiary-bg: #0C1929;
+  --cal-1181-tertiary-text: #7DD3FC;
   
   /* 1190 - Blues */
   --cal-1190-primary-border: #60A5FA;

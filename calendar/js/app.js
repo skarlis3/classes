@@ -166,16 +166,25 @@ const App = {
   updateThemeButton(theme) {
     const btn = document.getElementById('themeToggle');
     if (btn) {
-      const icon = theme === 'dark' ? '☀' : '☾';
-      const label = theme === 'dark' ? 'Light' : 'Dark';
-      btn.innerHTML = `${icon} ${label}`;
+      btn.textContent = theme === 'dark' ? '☀' : '☾';
+      btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     }
   },
   
   setFontSize(size) {
-    document.documentElement.setAttribute('data-font-size', size);
-    localStorage.setItem('calendarFontSize', size);
-    this.updateFontSizeButtons(size);
+    const currentSize = document.documentElement.getAttribute('data-font-size');
+    let newSize;
+    
+    // Toggle behavior: clicking active size returns to medium
+    if (currentSize === size) {
+      newSize = 'medium';
+    } else {
+      newSize = size;
+    }
+    
+    document.documentElement.setAttribute('data-font-size', newSize);
+    localStorage.setItem('calendarFontSize', newSize);
+    this.updateFontSizeButtons(newSize);
   },
   
   updateFontSizeButtons(activeSize) {

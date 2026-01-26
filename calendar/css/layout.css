@@ -68,17 +68,18 @@ button {
 /* Tabs - pill style in a container */
 .header-tabs {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   background: var(--bg-tertiary);
-  padding: 4px;
-  border-radius: var(--radius-lg);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
 }
 
 .tab-btn {
-  min-height: 32px;
-  padding: var(--space-xs) var(--space-md);
-  border-radius: calc(var(--radius-lg) - 4px);
-  font-size: var(--font-size-sm);
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-size: var(--font-size-xs);
   font-weight: 700;
   color: var(--text-muted);
   border: none;
@@ -100,16 +101,17 @@ button {
 .header-controls {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 /* Font size control group */
 .control-group {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   background: var(--bg-tertiary);
-  padding: 4px;
+  padding: 3px;
   border-radius: var(--radius-md);
 }
 
@@ -124,12 +126,12 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 28px;
-  min-width: 28px;
-  padding: var(--space-xs);
+  min-height: 24px;
+  min-width: 24px;
+  padding: 2px;
   background: transparent;
   border: none;
-  border-radius: calc(var(--radius-md) - 4px);
+  border-radius: calc(var(--radius-md) - 2px);
   font-size: var(--font-size-sm);
   font-weight: 700;
   color: var(--text-muted);
@@ -146,21 +148,30 @@ button {
   color: var(--text-on-accent);
 }
 
-/* Theme toggle */
+/* Theme toggle - icon only */
 #themeToggle {
   background: var(--bg-tertiary);
-  padding: var(--space-xs) var(--space-sm);
+  padding: 4px 8px;
   border-radius: var(--radius-md);
-  font-weight: 700;
+  font-size: var(--font-size-base);
 }
 
 #themeToggle:hover {
   background: var(--bg-hover);
 }
 
-/* Font size buttons */
+/* Font size buttons - small and large A */
 .font-btn {
-  min-width: 26px;
+  min-width: 22px;
+  font-family: var(--font-display);
+}
+
+.font-btn.size-small {
+  font-size: 0.7rem;
+}
+
+.font-btn.size-large {
+  font-size: 1rem;
 }
 
 .font-btn.size-small { font-size: 0.65rem; }

@@ -1,0 +1,197 @@
+/* =============================================================================
+   RESPONSIVE STYLES
+   ============================================================================= */
+
+/* Medium screens - switch to stacked layout for full view */
+@media (max-width: 1200px) {
+  .full-calendar-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  
+  .month-section {
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+    max-height: 50vh;
+  }
+  
+  .week-detail {
+    max-height: 50vh;
+    overflow: hidden;
+  }
+  
+  .week-days {
+    overflow-y: auto;
+  }
+}
+
+/* Smaller screens - adjust header */
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .calendar-filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .calendar-toggles {
+    width: 100%;
+  }
+  
+  .filter-actions {
+    margin-left: 0;
+    margin-top: var(--space-sm);
+  }
+  
+  /* Compact view adjustments */
+  .compact-calendar-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  
+  .mini-month-section {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+}
+
+/* Small screens - stack tabs, simplify controls */
+@media (max-width: 600px) {
+  .app-header {
+    padding: var(--space-sm);
+  }
+  
+  .app-title {
+    font-size: var(--font-size-lg);
+  }
+  
+  .tab-bar {
+    padding: var(--space-sm);
+    overflow-x: auto;
+  }
+  
+  .tab-btn {
+    padding: var(--space-sm) var(--space-md);
+    white-space: nowrap;
+  }
+  
+  .month-header {
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  
+  .month-title {
+    font-size: var(--font-size-lg);
+    flex: 1 1 100%;
+  }
+  
+  .weekday-header {
+    font-size: var(--font-size-xs);
+    padding: var(--space-xs);
+  }
+  
+  .day-number {
+    font-size: var(--font-size-xs);
+  }
+  
+  .day-event {
+    font-size: 0.7rem;
+    padding: 2px var(--space-xs);
+    -webkit-line-clamp: 1;
+  }
+  
+  /* Week detail on small screens */
+  .week-detail-header {
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .week-days {
+    padding: var(--space-sm);
+  }
+  
+  .week-day {
+    margin-bottom: var(--space-sm);
+  }
+  
+  .week-event {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Print styles */
+@media print {
+  .app-header,
+  .tab-bar,
+  .calendar-filters {
+    display: none;
+  }
+  
+  .full-calendar-view {
+    display: block;
+  }
+  
+  .month-section {
+    border: none;
+  }
+  
+  .week-detail {
+    page-break-before: always;
+  }
+  
+  .month-day {
+    border-color: #ccc;
+  }
+  
+  .day-event {
+    -webkit-line-clamp: none;
+    overflow: visible;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE ENHANCEMENTS
+   ============================================================================= */
+@media (prefers-contrast: more) {
+  :root {
+    --border-light: #737373;
+    --border-medium: #525252;
+  }
+  
+  .control-btn,
+  .tab-btn,
+  .cal-toggle,
+  .month-nav-btn,
+  .filter-action-btn {
+    border-width: 3px;
+  }
+  
+  .day-event,
+  .week-event,
+  .agenda-event {
+    border-left-width: 6px;
+  }
+}

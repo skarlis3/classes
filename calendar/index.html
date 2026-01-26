@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Calendar Viewer</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Header -->
+    <header class="app-header">
+      <h1 class="app-title">Class Calendars</h1>
+      
+      <div class="header-controls">
+        <!-- Font Size Controls -->
+        <div class="control-group">
+          <span class="control-label">Text:</span>
+          <button type="button" class="control-btn font-btn size-small" data-size="small" title="Small text">A</button>
+          <button type="button" class="control-btn font-btn size-medium" data-size="medium" title="Medium text">A</button>
+          <button type="button" class="control-btn font-btn size-large" data-size="large" title="Large text">A</button>
+          <button type="button" class="control-btn font-btn size-xlarge" data-size="x-large" title="Extra large text">A</button>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <button type="button" id="themeToggle" class="control-btn" title="Toggle light/dark mode">
+          <span aria-hidden="true">☾</span> Dark
+        </button>
+      </div>
+    </header>
+    
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+      <button type="button" class="tab-btn active" data-tab="fullViewTab">Full View</button>
+      <button type="button" class="tab-btn" data-tab="compactViewTab">Compact View</button>
+      <button type="button" class="tab-btn" data-tab="instructionsTab">Instructions</button>
+    </nav>
+    
+    <!-- Calendar Filters -->
+    <div class="calendar-filters">
+      <span class="filter-label">Calendars:</span>
+      <div class="calendar-toggles" id="calendarToggles">
+        <!-- Populated by JS -->
+      </div>
+      <div class="filter-actions">
+        <button type="button" class="filter-action-btn" id="showAllBtn">Show All</button>
+        <button type="button" class="filter-action-btn" id="hideAllBtn">Hide All</button>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Loading Indicator -->
+      <div class="loading-indicator" id="loadingIndicator">
+        Loading calendars...
+      </div>
+      
+      <!-- Error Message -->
+      <div class="error-message" id="errorMessage" style="display: none;"></div>
+      
+      <!-- Full View Tab -->
+      <div class="tab-content active" id="fullViewTab">
+        <div class="full-calendar-view">
+          
+          <!-- Month Grid -->
+          <section class="month-section">
+            <div class="month-header">
+              <h2 class="month-title" id="monthTitle">January 2026</h2>
+              <div class="month-nav">
+                <button type="button" class="month-nav-btn" id="prevMonth" title="Previous month">←</button>
+                <button type="button" class="month-nav-btn today-btn" id="todayBtn">Today</button>
+                <button type="button" class="month-nav-btn" id="nextMonth" title="Next month">→</button>
+              </div>
+            </div>
+            
+            <div class="month-grid">
+              <div class="month-weekdays">
+                <div class="weekday-header">Sun</div>
+                <div class="weekday-header">Mon</div>
+                <div class="weekday-header">Tue</div>
+                <div class="weekday-header">Wed</div>
+                <div class="weekday-header">Thu</div>
+                <div class="weekday-header">Fri</div>
+                <div class="weekday-header">Sat</div>
+              </div>
+              <div class="month-days" id="monthGrid">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </section>
+          
+          <!-- Week Detail -->
+          <aside class="week-detail">
+            <div class="week-detail-header">
+              <div class="week-detail-title">Week at a Glance</div>
+              <div class="week-detail-range" id="weekDetailRange">Jan 26 – Feb 1</div>
+            </div>
+            <div class="week-days" id="weekDays">
+              <!-- Populated by JS -->
+            </div>
+          </aside>
+          
+        </div>
+      </div>
+      
+      <!-- Compact View Tab -->
+      <div class="tab-content" id="compactViewTab">
+        <div class="compact-calendar-view">
+          
+          <!-- Mini Month -->
+          <section class="mini-month-section">
+            <div class="mini-month-header">
+              <span class="mini-month-title" id="miniMonthTitle">January 2026</span>
+              <div class="mini-month-nav">
+                <button type="button" class="mini-nav-btn" id="miniPrevMonth" title="Previous month">←</button>
+                <button type="button" class="mini-nav-btn" id="miniNextMonth" title="Next month">→</button>
+              </div>
+            </div>
+            <div class="mini-month-grid" id="miniMonthGrid">
+              <!-- Populated by JS -->
+            </div>
+          </section>
+          
+          <!-- Agenda -->
+          <section class="agenda-section">
+            <div class="agenda-header">
+              <div class="agenda-title">Week at a Glance</div>
+              <div class="agenda-range" id="agendaRange">Jan 26 – Feb 1</div>
+            </div>
+            <div class="agenda-list" id="agendaList">
+              <!-- Populated by JS -->
+            </div>
+          </section>
+          
+        </div>
+      </div>
+      
+      <!-- Instructions Tab -->
+      <div class="tab-content" id="instructionsTab">
+        <div class="instructions-content">
+          <h2>How to Add or Edit Calendars</h2>
+          
+          <p>This calendar viewer pulls data from public Google Calendars. To add a new class calendar or modify existing ones, you'll need to edit the <code>js/config.js</code> file.</p>
+          
+          <h3>Step 1: Get the Calendar ID</h3>
+          <ol>
+            <li>Go to <a href="https://calendar.google.com" target="_blank" rel="noopener">Google Calendar</a></li>
+            <li>Find your calendar in the left sidebar</li>
+            <li>Click the three dots (⋮) next to the calendar name</li>
+            <li>Select "Settings and sharing"</li>
+            <li>Scroll down to "Integrate calendar"</li>
+            <li>Copy the <strong>Calendar ID</strong> (it ends in <code>@group.calendar.google.com</code>)</li>
+          </ol>
+          
+          <h3>Step 2: Make Sure Calendar is Public</h3>
+          <ol>
+            <li>In the same settings page, scroll to "Access permissions for events"</li>
+            <li>Check "Make available to public"</li>
+            <li>Choose "See all event details"</li>
+          </ol>
+          
+          <h3>Step 3: Add to config.js</h3>
+          <p>Open <code>js/config.js</code> and add a new entry to the <code>CALENDARS</code> array:</p>
+          
+<pre><code>{
+  id: 'unique-id',           // A short identifier (no spaces)
+  name: 'Display Name',      // What shows in the filter buttons
+  calendarId: 'abc123...@group.calendar.google.com',
+  colorClass: 'cal-1170-primary'  // See color options below
+}</code></pre>
+          
+          <h3>Available Color Classes</h3>
+          <p>Choose from these predefined color families:</p>
+          <ul>
+            <li><strong>Purples (1170):</strong> <code>cal-1170-primary</code>, <code>cal-1170-secondary</code></li>
+            <li><strong>Greens (1181):</strong> <code>cal-1181-primary</code>, <code>cal-1181-secondary</code>, <code>cal-1181-tertiary</code></li>
+            <li><strong>Blues (1190):</strong> <code>cal-1190-primary</code>, <code>cal-1190-secondary</code></li>
+            <li><strong>Reds (2740):</strong> <code>cal-2740-primary</code>, <code>cal-2740-secondary</code></li>
+          </ul>
+          
+          <h3>Adding New Color Families</h3>
+          <p>To add colors for a new course (e.g., ENGL 2000), edit <code>css/variables.css</code>:</p>
+          
+          <ol>
+            <li>Find the <code>[data-theme="light"]</code> section</li>
+            <li>Add new color variables following the existing pattern</li>
+            <li>Repeat for the <code>[data-theme="dark"]</code> section</li>
+            <li>Add the color class definitions at the bottom of the file</li>
+          </ol>
+          
+<pre><code>/* In [data-theme="light"] */
+--cal-2000-primary-border: #YOUR_COLOR;
+--cal-2000-primary-bg: #LIGHT_BG;
+--cal-2000-primary-text: #TEXT_COLOR;
+
+/* Then add the class */
+.cal-2000-primary {
+  border-left-color: var(--cal-2000-primary-border);
+  background-color: var(--cal-2000-primary-bg);
+  color: var(--cal-2000-primary-text);
+}</code></pre>
+          
+          <h3>Step 4: Deploy Changes</h3>
+          <ol>
+            <li>Save your changes to the config file</li>
+            <li>Commit and push to GitHub</li>
+            <li>Wait a minute for GitHub Pages to update</li>
+            <li>Refresh this page</li>
+          </ol>
+          
+          <h3>Troubleshooting</h3>
+          <ul>
+            <li><strong>Calendar not loading:</strong> Make sure it's set to public in Google Calendar settings</li>
+            <li><strong>No events showing:</strong> Check that the calendar ID is correct (copy it again)</li>
+            <li><strong>API errors:</strong> The API key may need to be regenerated if it expires</li>
+          </ul>
+          
+          <h3>Use the Helper Tool</h3>
+          <p>For an easier way to generate the config code, use the standalone <strong>Calendar Config Helper</strong> tool (calendar-helper.html) which you can run locally on your computer.</p>
+        </div>
+      </div>
+      
+    </main>
+    
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

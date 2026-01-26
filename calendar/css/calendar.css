@@ -1,25 +1,27 @@
 /* =============================================================================
-   CALENDAR STYLES - Month Grid, Week Detail, Events
+   CALENDAR STYLES - Month Grid, Upcoming Panel, Events
    ============================================================================= */
 
 /* =============================================================================
-   FULL CALENDAR VIEW (Month + Week Detail Side by Side)
+   FULL CALENDAR VIEW (Month + Sidebar with Filters & Upcoming)
    ============================================================================= */
 .full-calendar-view {
   flex: 1;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 340px;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* =============================================================================
-   MONTH SECTION (Left Side)
+   MONTH SECTION (Left Side - Rolling 5 weeks)
    ============================================================================= */
 .month-section {
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-light);
   min-height: 0;
+  overflow: hidden;
 }
 
 /* Month Header with Navigation */
@@ -27,31 +29,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .month-title {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .month-nav {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
 }
 
 .month-nav-btn {
-  min-width: var(--touch-target-min);
-  min-height: var(--touch-target-min);
+  min-width: 36px;
+  min-height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-tertiary);
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-lg);
   font-weight: 500;
   color: var(--text-secondary);
@@ -61,12 +64,6 @@
 .month-nav-btn:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
-  border-color: var(--border-medium);
-}
-
-.month-nav-btn:focus-visible {
-  outline: 3px solid var(--accent-primary);
-  outline-offset: 2px;
 }
 
 .today-btn {
@@ -82,6 +79,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
 }
 
 .month-weekdays {
@@ -89,10 +87,11 @@
   grid-template-columns: repeat(7, 1fr);
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .weekday-header {
-  padding: var(--space-sm) var(--space-xs);
+  padding: var(--space-xs) var(--space-xs);
   text-align: center;
   font-size: var(--font-size-sm);
   font-weight: 600;
@@ -103,8 +102,9 @@
   flex: 1;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 1fr;
+  grid-template-rows: repeat(5, 1fr);
   min-height: 0;
+  overflow: hidden;
 }
 
 /* Individual Day Cell */
@@ -145,8 +145,8 @@
   background: var(--today-number-bg);
   color: var(--today-number-text);
   border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@
   font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--text-secondary);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 2px;
   flex-shrink: 0;
 }
 
@@ -181,9 +181,9 @@
 
 .day-event {
   font-size: var(--font-size-xs);
-  padding: 3px var(--space-sm);
-  border-radius: var(--radius-sm);
-  border-left: 4px solid;
+  padding: 2px var(--space-xs);
+  border-radius: 2px;
+  border-left: 3px solid;
   flex-shrink: 0;
   
   /* Text wrapping with line clamp */
@@ -191,101 +191,98 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.35;
+  line-height: 1.3;
   word-break: break-word;
 }
 
 .day-more {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  padding: 2px var(--space-sm);
+  padding: 2px var(--space-xs);
   font-weight: 500;
 }
 
 /* =============================================================================
-   WEEK DETAIL PANEL (Right Side)
+   SIDEBAR (Right Side - Filters + Upcoming)
    ============================================================================= */
-.week-detail {
+.calendar-sidebar {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
   background: var(--bg-primary);
 }
 
-.week-detail-header {
-  padding: var(--space-md) var(--space-lg);
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-light);
+/* Upcoming Panel */
+.upcoming-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
-.week-detail-title {
+.upcoming-header {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.upcoming-title {
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.week-detail-range {
+.upcoming-subtitle {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
-  margin-top: var(--space-xs);
 }
 
-.week-days {
+.upcoming-list {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-md);
+  padding: var(--space-sm);
 }
 
-/* Individual Day in Week Detail */
-.week-day {
+/* Upcoming day grouping */
+.upcoming-day {
   margin-bottom: var(--space-md);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-light);
-  overflow: hidden;
 }
 
-.week-day.today {
-  border-color: var(--today-border);
-  border-width: 2px;
+.upcoming-day:last-child {
+  margin-bottom: 0;
 }
 
-.week-day-header {
+.upcoming-day-header {
   display: flex;
   align-items: baseline;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
-  background: var(--bg-tertiary);
+  margin-bottom: var(--space-xs);
+  padding-bottom: var(--space-xs);
   border-bottom: 1px solid var(--border-light);
 }
 
-.week-day.today .week-day-header {
-  background: var(--today-bg);
+.upcoming-day.today .upcoming-day-header {
+  border-bottom-color: var(--today-border);
 }
 
-.week-day-name {
+.upcoming-day-name {
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.week-day-date {
+.upcoming-day.today .upcoming-day-name {
+  color: var(--accent-primary);
+}
+
+.upcoming-day-date {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
 }
 
-.week-day-events {
-  padding: var(--space-sm);
-}
-
-.week-day-events:empty::after {
-  content: '—';
-  color: var(--text-muted);
-  display: block;
-  padding: var(--space-sm);
-}
-
-/* Event in week detail - full text wrapping */
-.week-event {
+.upcoming-event {
   padding: var(--space-sm) var(--space-md);
   margin-bottom: var(--space-xs);
   border-radius: var(--radius-sm);
@@ -295,14 +292,21 @@
   word-break: break-word;
 }
 
-.week-event:last-child {
+.upcoming-event:last-child {
   margin-bottom: 0;
 }
 
-.week-event-time {
+.upcoming-event-time {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 2px;
+}
+
+.upcoming-no-events {
+  padding: var(--space-md);
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
 }
 
 /* =============================================================================
@@ -311,26 +315,28 @@
 .compact-calendar-view {
   flex: 1;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* Mini Month */
 .mini-month-section {
-  width: 280px;
   border-right: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
   background: var(--bg-secondary);
+  overflow: hidden;
 }
 
 .mini-month-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .mini-month-title {
@@ -416,11 +422,11 @@
 .mini-day.has-events::after {
   content: '';
   position: absolute;
-  bottom: 3px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: var(--event-dot);
 }
@@ -429,7 +435,14 @@
   background: var(--today-number-text);
 }
 
-/* Agenda Panel */
+/* Compact Filters */
+.compact-filters {
+  padding: var(--space-sm);
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+/* Agenda Panel (Compact View) */
 .agenda-section {
   flex: 1;
   display: flex;
@@ -439,9 +452,10 @@
 }
 
 .agenda-header {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .agenda-title {
@@ -450,21 +464,26 @@
   color: var(--text-primary);
 }
 
+.agenda-range {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
 .agenda-list {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-md);
+  padding: var(--space-sm);
 }
 
 .agenda-day {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .agenda-day-header {
   display: flex;
   align-items: baseline;
   gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
   padding-bottom: var(--space-xs);
   border-bottom: 1px solid var(--border-light);
 }
@@ -489,7 +508,7 @@
 
 .agenda-event {
   padding: var(--space-sm) var(--space-md);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
   border-radius: var(--radius-sm);
   border-left: 4px solid;
   font-size: var(--font-size-sm);
@@ -500,7 +519,7 @@
 .agenda-event-time {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 2px;
 }
 
 .agenda-no-events {

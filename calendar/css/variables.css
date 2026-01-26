@@ -72,16 +72,17 @@
   --cal-1170-secondary-bg: #F5F3FF;
   --cal-1170-secondary-text: #5B21B6;
   
-  /* 1181 - Greens */
+  /* 1181 - Greens (primary/secondary) and Cyan (tertiary) */
   --cal-1181-primary-border: #047857;
   --cal-1181-primary-bg: #ECFDF5;
   --cal-1181-primary-text: #065F46;
-  --cal-1181-secondary-border: #059669;
-  --cal-1181-secondary-bg: #ECFDF5;
-  --cal-1181-secondary-text: #047857;
-  --cal-1181-tertiary-border: #0D9488;
-  --cal-1181-tertiary-bg: #F0FDFA;
-  --cal-1181-tertiary-text: #0F766E;
+  --cal-1181-secondary-border: #16A34A;
+  --cal-1181-secondary-bg: #F0FDF4;
+  --cal-1181-secondary-text: #166534;
+  /* Tertiary is now distinctly CYAN/TEAL */
+  --cal-1181-tertiary-border: #0891B2;
+  --cal-1181-tertiary-bg: #ECFEFF;
+  --cal-1181-tertiary-text: #0E7490;
   
   /* 1190 - Blues */
   --cal-1190-primary-border: #1D4ED8;
@@ -141,16 +142,17 @@
   --cal-1170-secondary-bg: #1E1533;
   --cal-1170-secondary-text: #DDD6FE;
   
-  /* 1181 - Greens */
+  /* 1181 - Greens and Cyan */
   --cal-1181-primary-border: #34D399;
   --cal-1181-primary-bg: #132620;
   --cal-1181-primary-text: #6EE7B7;
-  --cal-1181-secondary-border: #6EE7B7;
-  --cal-1181-secondary-bg: #132620;
-  --cal-1181-secondary-text: #A7F3D0;
-  --cal-1181-tertiary-border: #5EEAD4;
-  --cal-1181-tertiary-bg: #132626;
-  --cal-1181-tertiary-text: #99F6E4;
+  --cal-1181-secondary-border: #4ADE80;
+  --cal-1181-secondary-bg: #14261A;
+  --cal-1181-secondary-text: #86EFAC;
+  /* Tertiary is now distinctly CYAN */
+  --cal-1181-tertiary-border: #22D3EE;
+  --cal-1181-tertiary-bg: #132633;
+  --cal-1181-tertiary-text: #67E8F9;
   
   /* 1190 - Blues */
   --cal-1190-primary-border: #60A5FA;
@@ -196,7 +198,7 @@
   color: var(--cal-1170-secondary-text);
 }
 
-/* 1181 Greens */
+/* 1181 Greens + Cyan */
 .cal-1181-primary {
   border-left-color: var(--cal-1181-primary-border);
   background-color: var(--cal-1181-primary-bg);

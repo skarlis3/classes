@@ -5,10 +5,6 @@
 const CalendarAPI = {
   /**
    * Fetch events from a Google Calendar
-   * @param {string} calendarId - The calendar ID
-   * @param {Date} timeMin - Start of date range
-   * @param {Date} timeMax - End of date range
-   * @returns {Promise<Array>} Array of event objects
    */
   async fetchEvents(calendarId, timeMin, timeMax) {
     const params = new URLSearchParams({
@@ -26,6 +22,8 @@ const CalendarAPI = {
       const response = await fetch(url);
       
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`API Error for ${calendarId}:`, response.status, errorText);
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
@@ -39,12 +37,12 @@ const CalendarAPI = {
   
   /**
    * Fetch events from all configured calendars
-   * @returns {Promise<Object>} Object mapping calendar IDs to their events
    */
   async fetchAllCalendars() {
     const now = new Date();
     const monthsToFetch = CONFIG.MONTHS_TO_FETCH || 6;
     
+    // Fetch from 6 months ago to 6 months ahead
     const timeMin = new Date(now.getFullYear(), now.getMonth() - monthsToFetch, 1);
     const timeMax = new Date(now.getFullYear(), now.getMonth() + monthsToFetch + 1, 0);
     
@@ -61,8 +59,9 @@ const CalendarAPI = {
             calendarName: cal.name,
             colorClass: cal.colorClass
           }));
+          console.log(`Loaded ${events.length} events from ${cal.name}`);
         } catch (error) {
-          errors.push({ calendar: cal.name, error: error.message });
+          errors.push({ calendar: cal.name, calendarId: cal.calendarId, error: error.message });
           results[cal.id] = [];
         }
       })

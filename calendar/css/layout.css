@@ -1,5 +1,5 @@
 /* =============================================================================
-   LAYOUT - Header, Tabs, Main Structure
+   LAYOUT - Header, Tabs, Main Structure (COMPACT)
    ============================================================================= */
 
 /* Reset */
@@ -35,62 +35,86 @@ button {
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* =============================================================================
-   HEADER
+   HEADER - Single compact line
    ============================================================================= */
 .app-header {
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-light);
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-xs) var(--space-md);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: var(--space-md);
+  flex-shrink: 0;
 }
 
 .app-title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 600;
+  color: var(--text-primary);
+  margin-right: auto;
+}
+
+/* Tabs inline in header */
+.header-tabs {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.tab-btn {
+  min-height: 32px;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+  background: var(--bg-hover);
   color: var(--text-primary);
 }
 
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  flex-wrap: wrap;
+.tab-btn.active {
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
 }
 
-/* =============================================================================
-   CONTROL BUTTONS
-   ============================================================================= */
-.control-group {
+/* Controls */
+.header-controls {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
 
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
 .control-label {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
-  font-weight: 500;
+  margin-right: var(--space-xs);
 }
 
 .control-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xs);
-  min-height: var(--touch-target-min);
-  min-width: var(--touch-target-min);
-  padding: var(--space-sm) var(--space-md);
+  min-height: 32px;
+  min-width: 32px;
+  padding: var(--space-xs) var(--space-sm);
   background: var(--bg-tertiary);
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--text-secondary);
@@ -100,12 +124,6 @@ button {
 .control-btn:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
-  border-color: var(--border-medium);
-}
-
-.control-btn:focus-visible {
-  outline: 3px solid var(--accent-primary);
-  outline-offset: 2px;
 }
 
 .control-btn.active {
@@ -114,72 +132,55 @@ button {
   border-color: var(--accent-primary);
 }
 
-.control-btn svg {
-  width: 1.25em;
-  height: 1.25em;
-  flex-shrink: 0;
-}
-
 /* Font size buttons */
 .font-btn {
-  min-width: var(--touch-target-min);
-  padding: var(--space-sm);
+  min-width: 28px;
+  padding: 2px;
   font-weight: 600;
 }
 
-.font-btn.size-small { font-size: 0.75rem; }
-.font-btn.size-medium { font-size: 0.875rem; }
-.font-btn.size-large { font-size: 1rem; }
-.font-btn.size-xlarge { font-size: 1.125rem; }
+.font-btn.size-small { font-size: 0.65rem; }
+.font-btn.size-medium { font-size: 0.75rem; }
+.font-btn.size-large { font-size: 0.85rem; }
+.font-btn.size-xlarge { font-size: 0.95rem; }
 
 /* =============================================================================
-   TAB BAR
+   MAIN CONTENT
    ============================================================================= */
-.tab-bar {
+.main-content {
+  flex: 1;
   display: flex;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-light);
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
-.tab-btn {
-  min-height: var(--touch-target-min);
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--text-secondary);
-  border: 2px solid transparent;
-  transition: all var(--transition-fast);
+.tab-content {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
-.tab-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
-
-.tab-btn:focus-visible {
-  outline: 3px solid var(--accent-primary);
-  outline-offset: 2px;
-}
-
-.tab-btn.active {
-  background: var(--accent-primary);
-  color: var(--text-on-accent);
+.tab-content.active {
+  display: flex;
+  flex-direction: column;
 }
 
 /* =============================================================================
-   CALENDAR FILTERS
+   CALENDAR FILTERS - Sidebar style
    ============================================================================= */
 .calendar-filters {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm);
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-light);
+}
+
+.filter-header {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
 }
 
 .filter-label {
@@ -188,18 +189,38 @@ button {
   color: var(--text-secondary);
 }
 
-.calendar-toggles {
+.filter-actions {
   display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-  flex: 1;
+  gap: var(--space-xs);
 }
 
-/* Large, easy-to-click calendar toggle buttons */
+.filter-action-btn {
+  padding: 2px var(--space-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+  transition: all var(--transition-fast);
+}
+
+.filter-action-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.calendar-toggles {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+/* Calendar toggle buttons - still large for easy clicking */
 .cal-toggle {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   min-height: var(--touch-target-min);
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-md);
@@ -215,11 +236,6 @@ button {
 .cal-toggle:hover {
   background: var(--bg-hover);
   border-color: var(--border-medium);
-}
-
-.cal-toggle:focus-visible {
-  outline: 3px solid var(--accent-primary);
-  outline-offset: 2px;
 }
 
 .cal-toggle.active {
@@ -242,56 +258,6 @@ button {
 
 .cal-toggle:not(.active) .color-dot {
   opacity: 0.4;
-}
-
-/* Filter action buttons */
-.filter-actions {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.filter-action-btn {
-  min-height: var(--touch-target-min);
-  padding: var(--space-sm) var(--space-md);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  background: var(--bg-tertiary);
-  transition: all var(--transition-fast);
-}
-
-.filter-action-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-  border-color: var(--border-medium);
-}
-
-.filter-action-btn:focus-visible {
-  outline: 3px solid var(--accent-primary);
-  outline-offset: 2px;
-}
-
-/* =============================================================================
-   MAIN CONTENT
-   ============================================================================= */
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.tab-content {
-  display: none;
-  flex: 1;
-  min-height: 0;
-}
-
-.tab-content.active {
-  display: flex;
-  flex-direction: column;
 }
 
 /* =============================================================================
@@ -322,7 +288,7 @@ button {
 }
 
 .error-message {
-  padding: var(--space-lg);
+  padding: var(--space-md);
   margin: var(--space-md);
   background: var(--cal-2740-primary-bg);
   border-left: 4px solid var(--cal-2740-primary-border);
@@ -337,6 +303,8 @@ button {
   padding: var(--space-lg);
   max-width: 900px;
   margin: 0 auto;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .instructions-content h2 {

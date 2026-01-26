@@ -6,10 +6,10 @@
  * 2. Follow the existing pattern for id, name, calendarId, and colorClass
  * 
  * Color classes available:
- *   - cal-1170-primary, cal-1170-secondary
- *   - cal-1181-primary, cal-1181-secondary, cal-1181-tertiary
- *   - cal-1190-primary, cal-1190-secondary
- *   - cal-2740-primary, cal-2740-secondary
+ *   - cal-1170-primary, cal-1170-secondary (purples)
+ *   - cal-1181-primary, cal-1181-secondary (greens), cal-1181-tertiary (cyan/teal)
+ *   - cal-1190-primary, cal-1190-secondary (blues)
+ *   - cal-2740-primary, cal-2740-secondary (reds)
  * 
  * To add new color families, edit css/variables.css
  */

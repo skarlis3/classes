@@ -3,20 +3,14 @@
  */
 
 const CalendarFilters = {
-  // Track which calendars are active
   activeCalendars: new Set(),
-  
-  // Track which calendars have events
   calendarsWithEvents: new Set(),
-  
-  // Callback when filters change
   onFilterChange: null,
   
   /**
-   * Initialize filters with all calendars active by default
+   * Initialize filters
    */
   init(calendarData) {
-    // Determine which calendars have events
     this.calendarsWithEvents.clear();
     for (const [calId, events] of Object.entries(calendarData)) {
       if (events && events.length > 0) {
@@ -27,14 +21,15 @@ const CalendarFilters = {
     // Activate all calendars with events by default
     this.activeCalendars = new Set(this.calendarsWithEvents);
     
-    this.renderToggles();
+    this.renderToggles('calendarToggles');
+    this.renderToggles('compactCalendarToggles');
   },
   
   /**
    * Render the calendar toggle buttons
    */
-  renderToggles() {
-    const container = document.getElementById('calendarToggles');
+  renderToggles(containerId) {
+    const container = document.getElementById(containerId);
     if (!container) return;
     
     container.innerHTML = '';
@@ -71,13 +66,11 @@ const CalendarFilters = {
       this.activeCalendars.add(calendarId);
     }
     
-    // Update button state
-    const btn = document.querySelector(`[data-calendar-id="${calendarId}"]`);
-    if (btn) {
+    // Update all toggle button states
+    document.querySelectorAll(`[data-calendar-id="${calendarId}"]`).forEach(btn => {
       btn.classList.toggle('active', this.activeCalendars.has(calendarId));
-    }
+    });
     
-    // Trigger re-render
     if (this.onFilterChange) {
       this.onFilterChange();
     }

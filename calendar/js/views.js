@@ -3,21 +3,21 @@
  */
 
 const CalendarViews = {
-  // All events data (keyed by calendar ID)
   calendarData: {},
-  
-  // Flattened array of all events
   allEvents: [],
   
-  // Current view state
-  currentMonth: new Date(),
+  // For rolling view: the Monday of the "anchor" week (1 week ago from today by default)
+  viewAnchor: null,
+  
+  // For upcoming: track which week is selected
   selectedWeekStart: null,
   
-  // Day/month names
   dayNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   dayNamesFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 
                'July', 'August', 'September', 'October', 'November', 'December'],
+  monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   
   /**
    * Initialize with calendar data
@@ -25,22 +25,26 @@ const CalendarViews = {
   init(data) {
     this.calendarData = data;
     this.flattenEvents();
-    this.selectedWeekStart = this.getWeekStart(new Date());
+    
+    // Set view anchor to start of last week (rolling: 1 past + 4 future weeks)
+    const today = new Date();
+    this.viewAnchor = this.getWeekStart(today);
+    this.viewAnchor.setDate(this.viewAnchor.getDate() - 7); // Go back 1 week
+    
+    this.selectedWeekStart = this.getWeekStart(today);
   },
   
-  /**
-   * Flatten all calendar events into a single array
-   */
   flattenEvents() {
     this.allEvents = [];
     for (const events of Object.values(this.calendarData)) {
       this.allEvents.push(...events);
     }
+    // Sort by date
+    this.allEvents.sort((a, b) => {
+      return this.getEventDate(a) - this.getEventDate(b);
+    });
   },
   
-  /**
-   * Get filtered events (respecting active calendar filters)
-   */
   getFilteredEvents() {
     return CalendarFilters.filterEvents(this.allEvents);
   },
@@ -65,6 +69,14 @@ const CalendarViews = {
   
   isToday(date) {
     return this.isSameDay(date, new Date());
+  },
+  
+  isPast(date) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d < today;
   },
   
   isInWeek(date, weekStart) {
@@ -108,64 +120,60 @@ const CalendarViews = {
   },
   
   // =========================================================================
-  // Full Calendar View (Month + Week Detail)
+  // Full Calendar View (Rolling 5 weeks + Upcoming sidebar)
   // =========================================================================
   
   renderFullView() {
-    this.renderMonthGrid();
-    this.renderWeekDetail();
+    this.renderRollingMonth();
+    this.renderUpcoming();
   },
   
-  renderMonthGrid() {
+  renderRollingMonth() {
     const container = document.getElementById('monthGrid');
     if (!container) return;
     
-    const year = this.currentMonth.getFullYear();
-    const month = this.currentMonth.getMonth();
+    // Calculate the date range for the title
+    const startDate = new Date(this.viewAnchor);
+    const endDate = new Date(this.viewAnchor);
+    endDate.setDate(endDate.getDate() + 34); // 5 weeks - 1 day
     
-    // Update title
+    // Update title to show date range
     const titleEl = document.getElementById('monthTitle');
     if (titleEl) {
-      titleEl.textContent = `${this.monthNames[month]} ${year}`;
+      if (startDate.getMonth() === endDate.getMonth()) {
+        titleEl.textContent = `${this.monthNames[startDate.getMonth()]} ${startDate.getFullYear()}`;
+      } else if (startDate.getFullYear() === endDate.getFullYear()) {
+        titleEl.textContent = `${this.monthNamesShort[startDate.getMonth()]} – ${this.monthNamesShort[endDate.getMonth()]} ${startDate.getFullYear()}`;
+      } else {
+        titleEl.textContent = `${this.monthNamesShort[startDate.getMonth()]} ${startDate.getFullYear()} – ${this.monthNamesShort[endDate.getMonth()]} ${endDate.getFullYear()}`;
+      }
     }
-    
-    // Calculate grid
-    const firstOfMonth = new Date(year, month, 1);
-    const lastOfMonth = new Date(year, month + 1, 0);
-    const startDay = firstOfMonth.getDay();
-    const totalDays = lastOfMonth.getDate();
-    
-    // We want to show one week before and after
-    const gridStart = new Date(firstOfMonth);
-    gridStart.setDate(gridStart.getDate() - startDay - 7); // One week before start
     
     let html = '';
     
-    // Generate 8 weeks (to show week before and after)
-    for (let week = 0; week < 8; week++) {
-      for (let day = 0; day < 7; day++) {
-        const currentDate = new Date(gridStart);
-        currentDate.setDate(gridStart.getDate() + (week * 7) + day);
-        
-        const isOtherMonth = currentDate.getMonth() !== month;
-        const isToday = this.isToday(currentDate);
-        const isInSelectedWeek = this.isInWeek(currentDate, this.selectedWeekStart);
-        const dayEvents = this.getEventsForDay(currentDate);
-        
-        let classes = 'month-day';
-        if (isOtherMonth) classes += ' other-month';
-        if (isToday) classes += ' today';
-        if (isInSelectedWeek) classes += ' in-selected-week';
-        
-        html += `
-          <div class="${classes}" data-date="${currentDate.toISOString()}">
-            <div class="day-number">${currentDate.getDate()}</div>
-            <div class="day-events">
-              ${this.renderDayEvents(dayEvents, 3)}
-            </div>
+    // Generate 5 weeks (35 days)
+    for (let i = 0; i < 35; i++) {
+      const currentDate = new Date(this.viewAnchor);
+      currentDate.setDate(currentDate.getDate() + i);
+      
+      const isToday = this.isToday(currentDate);
+      const isInSelectedWeek = this.isInWeek(currentDate, this.selectedWeekStart);
+      const dayEvents = this.getEventsForDay(currentDate);
+      const isPastDay = this.isPast(currentDate) && !isToday;
+      
+      let classes = 'month-day';
+      if (isToday) classes += ' today';
+      if (isInSelectedWeek) classes += ' in-selected-week';
+      if (isPastDay) classes += ' past-day';
+      
+      html += `
+        <div class="${classes}" data-date="${currentDate.toISOString()}">
+          <div class="day-number">${currentDate.getDate()}</div>
+          <div class="day-events">
+            ${this.renderDayEvents(dayEvents, 3)}
           </div>
-        `;
-      }
+        </div>
+      `;
     }
     
     container.innerHTML = html;
@@ -201,52 +209,66 @@ const CalendarViews = {
     return html;
   },
   
-  renderWeekDetail() {
-    const container = document.getElementById('weekDays');
-    const headerEl = document.getElementById('weekDetailRange');
-    if (!container || !this.selectedWeekStart) return;
+  /**
+   * Render Upcoming panel - only shows days that have events
+   */
+  renderUpcoming() {
+    const container = document.getElementById('upcomingList');
+    const titleEl = document.getElementById('upcomingSubtitle');
+    if (!container) return;
     
-    const weekEnd = new Date(this.selectedWeekStart);
-    weekEnd.setDate(weekEnd.getDate() + 6);
+    // Get events for the next 14 days (or selected week if past)
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
     
-    if (headerEl) {
-      headerEl.textContent = this.formatDateRange(this.selectedWeekStart, weekEnd);
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 14);
+    
+    if (titleEl) {
+      titleEl.textContent = 'Next 2 weeks';
+    }
+    
+    // Collect days that have events
+    const daysWithEvents = [];
+    const currentDate = new Date(startDate);
+    
+    while (currentDate < endDate) {
+      const dayEvents = this.getEventsForDay(currentDate);
+      if (dayEvents.length > 0) {
+        daysWithEvents.push({
+          date: new Date(currentDate),
+          events: dayEvents,
+          isToday: this.isToday(currentDate)
+        });
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    if (daysWithEvents.length === 0) {
+      container.innerHTML = '<div class="upcoming-no-events">No upcoming events</div>';
+      return;
     }
     
     let html = '';
     
-    for (let i = 0; i < 7; i++) {
-      const currentDate = new Date(this.selectedWeekStart);
-      currentDate.setDate(currentDate.getDate() + i);
-      
-      const isToday = this.isToday(currentDate);
-      const dayEvents = this.getEventsForDay(currentDate);
-      
+    daysWithEvents.forEach(day => {
       html += `
-        <div class="week-day${isToday ? ' today' : ''}">
-          <div class="week-day-header">
-            <span class="week-day-name">${this.dayNamesFull[currentDate.getDay()]}</span>
-            <span class="week-day-date">${this.monthNames[currentDate.getMonth()]} ${currentDate.getDate()}</span>
+        <div class="upcoming-day${day.isToday ? ' today' : ''}">
+          <div class="upcoming-day-header">
+            <span class="upcoming-day-name">${day.isToday ? 'Today' : this.dayNamesFull[day.date.getDay()]}</span>
+            <span class="upcoming-day-date">${this.monthNamesShort[day.date.getMonth()]} ${day.date.getDate()}</span>
           </div>
-          <div class="week-day-events">
-            ${this.renderWeekEvents(dayEvents)}
-          </div>
+          ${day.events.map(event => `
+            <div class="upcoming-event ${event.colorClass}">
+              <div class="upcoming-event-time">${this.formatTime(event)}</div>
+              <div class="upcoming-event-title">${this.escapeHtml(event.summary)}</div>
+            </div>
+          `).join('')}
         </div>
       `;
-    }
+    });
     
     container.innerHTML = html;
-  },
-  
-  renderWeekEvents(events) {
-    if (events.length === 0) return '';
-    
-    return events.map(event => `
-      <div class="week-event ${event.colorClass}">
-        <div class="week-event-time">${this.formatTime(event)}</div>
-        <div class="week-event-title">${this.escapeHtml(event.summary)}</div>
-      </div>
-    `).join('');
   },
   
   // =========================================================================
@@ -263,20 +285,17 @@ const CalendarViews = {
     const titleEl = document.getElementById('miniMonthTitle');
     if (!container) return;
     
-    const year = this.currentMonth.getFullYear();
-    const month = this.currentMonth.getMonth();
+    const startDate = new Date(this.viewAnchor);
+    const endDate = new Date(this.viewAnchor);
+    endDate.setDate(endDate.getDate() + 34);
     
     if (titleEl) {
-      titleEl.textContent = `${this.monthNames[month]} ${year}`;
+      if (startDate.getMonth() === endDate.getMonth()) {
+        titleEl.textContent = `${this.monthNames[startDate.getMonth()]} ${startDate.getFullYear()}`;
+      } else {
+        titleEl.textContent = `${this.monthNamesShort[startDate.getMonth()]} – ${this.monthNamesShort[endDate.getMonth()]}`;
+      }
     }
-    
-    const firstOfMonth = new Date(year, month, 1);
-    const lastOfMonth = new Date(year, month + 1, 0);
-    const startDay = firstOfMonth.getDay();
-    
-    // Start one week before
-    const gridStart = new Date(firstOfMonth);
-    gridStart.setDate(gridStart.getDate() - startDay - 7);
     
     let html = '';
     
@@ -285,18 +304,16 @@ const CalendarViews = {
       html += `<div class="mini-weekday">${d.charAt(0)}</div>`;
     });
     
-    // Days (8 weeks)
-    for (let i = 0; i < 56; i++) {
-      const currentDate = new Date(gridStart);
-      currentDate.setDate(gridStart.getDate() + i);
+    // Days (5 weeks)
+    for (let i = 0; i < 35; i++) {
+      const currentDate = new Date(this.viewAnchor);
+      currentDate.setDate(currentDate.getDate() + i);
       
-      const isOtherMonth = currentDate.getMonth() !== month;
       const isToday = this.isToday(currentDate);
       const isInSelectedWeek = this.isInWeek(currentDate, this.selectedWeekStart);
       const hasEvents = this.getEventsForDay(currentDate).length > 0;
       
       let classes = 'mini-day';
-      if (isOtherMonth) classes += ' other-month';
       if (isToday) classes += ' today';
       if (isInSelectedWeek) classes += ' in-selected-week';
       if (hasEvents) classes += ' has-events';
@@ -322,14 +339,14 @@ const CalendarViews = {
   
   renderAgenda() {
     const container = document.getElementById('agendaList');
-    const headerEl = document.getElementById('agendaRange');
+    const rangeEl = document.getElementById('agendaRange');
     if (!container || !this.selectedWeekStart) return;
     
     const weekEnd = new Date(this.selectedWeekStart);
     weekEnd.setDate(weekEnd.getDate() + 6);
     
-    if (headerEl) {
-      headerEl.textContent = this.formatDateRange(this.selectedWeekStart, weekEnd);
+    if (rangeEl) {
+      rangeEl.textContent = this.formatDateRange(this.selectedWeekStart, weekEnd);
     }
     
     let html = '';
@@ -345,7 +362,7 @@ const CalendarViews = {
         <div class="agenda-day${isToday ? ' today' : ''}">
           <div class="agenda-day-header">
             <span class="agenda-day-name">${this.dayNamesFull[currentDate.getDay()]}</span>
-            <span class="agenda-day-date">${this.monthNames[currentDate.getMonth()]} ${currentDate.getDate()}</span>
+            <span class="agenda-day-date">${this.monthNamesShort[currentDate.getMonth()]} ${currentDate.getDate()}</span>
           </div>
           ${dayEvents.length > 0 ? dayEvents.map(event => `
             <div class="agenda-event ${event.colorClass}">
@@ -364,19 +381,21 @@ const CalendarViews = {
   // Navigation
   // =========================================================================
   
-  prevMonth() {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
+  prevWeek() {
+    this.viewAnchor.setDate(this.viewAnchor.getDate() - 7);
     this.refreshCurrentView();
   },
   
-  nextMonth() {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
+  nextWeek() {
+    this.viewAnchor.setDate(this.viewAnchor.getDate() + 7);
     this.refreshCurrentView();
   },
   
   goToToday() {
-    this.currentMonth = new Date();
-    this.selectedWeekStart = this.getWeekStart(new Date());
+    const today = new Date();
+    this.viewAnchor = this.getWeekStart(today);
+    this.viewAnchor.setDate(this.viewAnchor.getDate() - 7);
+    this.selectedWeekStart = this.getWeekStart(today);
     this.refreshCurrentView();
   },
   
@@ -388,10 +407,6 @@ const CalendarViews = {
       this.renderCompactView();
     }
   },
-  
-  // =========================================================================
-  // Utilities
-  // =========================================================================
   
   escapeHtml(text) {
     if (!text) return '';

@@ -2,102 +2,92 @@
    RESPONSIVE STYLES
    ============================================================================= */
 
-/* Medium screens - switch to stacked layout for full view */
-@media (max-width: 1200px) {
+/* Medium screens - narrower sidebar */
+@media (max-width: 1100px) {
+  .full-calendar-view {
+    grid-template-columns: 1fr 300px;
+  }
+}
+
+/* Smaller screens - stack layout */
+@media (max-width: 900px) {
   .full-calendar-view {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr auto;
   }
   
   .month-section {
     border-right: none;
     border-bottom: 1px solid var(--border-light);
-    max-height: 50vh;
   }
   
-  .week-detail {
-    max-height: 50vh;
-    overflow: hidden;
+  .calendar-sidebar {
+    max-height: 40vh;
   }
   
-  .week-days {
-    overflow-y: auto;
-  }
-}
-
-/* Smaller screens - adjust header */
-@media (max-width: 900px) {
-  .app-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .header-controls {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .calendar-filters {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .calendar-toggles {
-    width: 100%;
-  }
-  
-  .filter-actions {
-    margin-left: 0;
-    margin-top: var(--space-sm);
-  }
-  
-  /* Compact view adjustments */
   .compact-calendar-view {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
   }
   
   .mini-month-section {
-    width: 100%;
     border-right: none;
     border-bottom: 1px solid var(--border-light);
   }
 }
 
-/* Small screens - stack tabs, simplify controls */
-@media (max-width: 600px) {
+/* Small screens - adjust header */
+@media (max-width: 700px) {
   .app-header {
-    padding: var(--space-sm);
+    flex-wrap: wrap;
+    padding: var(--space-xs) var(--space-sm);
   }
   
   .app-title {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
   }
   
-  .tab-bar {
-    padding: var(--space-sm);
-    overflow-x: auto;
-  }
-  
-  .tab-btn {
-    padding: var(--space-sm) var(--space-md);
-    white-space: nowrap;
+  .header-tabs {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--space-xs);
   }
   
   .month-header {
-    padding: var(--space-sm) var(--space-md);
     flex-wrap: wrap;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
   }
   
   .month-title {
     font-size: var(--font-size-lg);
-    flex: 1 1 100%;
+    width: 100%;
+  }
+  
+  .cal-toggle {
+    min-height: 40px;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Very small screens */
+@media (max-width: 500px) {
+  .header-controls {
+    gap: var(--space-xs);
+  }
+  
+  .control-label {
+    display: none;
+  }
+  
+  .font-btn {
+    min-width: 24px;
   }
   
   .weekday-header {
     font-size: var(--font-size-xs);
-    padding: var(--space-xs);
+    padding: 2px;
   }
   
   .day-number {
@@ -105,57 +95,9 @@
   }
   
   .day-event {
-    font-size: 0.7rem;
-    padding: 2px var(--space-xs);
+    font-size: 0.65rem;
+    padding: 1px 4px;
     -webkit-line-clamp: 1;
-  }
-  
-  /* Week detail on small screens */
-  .week-detail-header {
-    padding: var(--space-sm) var(--space-md);
-  }
-  
-  .week-days {
-    padding: var(--space-sm);
-  }
-  
-  .week-day {
-    margin-bottom: var(--space-sm);
-  }
-  
-  .week-event {
-    padding: var(--space-xs) var(--space-sm);
-    font-size: var(--font-size-xs);
-  }
-}
-
-/* Print styles */
-@media print {
-  .app-header,
-  .tab-bar,
-  .calendar-filters {
-    display: none;
-  }
-  
-  .full-calendar-view {
-    display: block;
-  }
-  
-  .month-section {
-    border: none;
-  }
-  
-  .week-detail {
-    page-break-before: always;
-  }
-  
-  .month-day {
-    border-color: #ccc;
-  }
-  
-  .day-event {
-    -webkit-line-clamp: none;
-    overflow: visible;
   }
 }
 
@@ -173,7 +115,7 @@
 }
 
 /* =============================================================================
-   HIGH CONTRAST MODE ENHANCEMENTS
+   HIGH CONTRAST MODE
    ============================================================================= */
 @media (prefers-contrast: more) {
   :root {
@@ -184,14 +126,43 @@
   .control-btn,
   .tab-btn,
   .cal-toggle,
-  .month-nav-btn,
-  .filter-action-btn {
-    border-width: 3px;
+  .month-nav-btn {
+    border-width: 2px;
   }
   
   .day-event,
-  .week-event,
+  .upcoming-event,
   .agenda-event {
-    border-left-width: 6px;
+    border-left-width: 5px;
+  }
+}
+
+/* =============================================================================
+   PRINT
+   ============================================================================= */
+@media print {
+  .app-header,
+  .calendar-filters {
+    display: none;
+  }
+  
+  .full-calendar-view {
+    display: block;
+  }
+  
+  .calendar-sidebar {
+    display: none;
+  }
+  
+  .month-section {
+    border: none;
+  }
+  
+  .month-day {
+    border-color: #ccc;
+  }
+  
+  .day-event {
+    -webkit-line-clamp: unset;
   }
 }

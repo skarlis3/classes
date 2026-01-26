@@ -400,3 +400,163 @@ button {
 .instructions-content a:hover {
   text-decoration: underline;
 }
+
+/* =============================================================================
+   EVENT MODAL / POPUP
+   ============================================================================= */
+.event-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+  padding: var(--space-md);
+}
+
+.event-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.event-modal {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  max-width: 480px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.event-modal-overlay.active .event-modal {
+  transform: scale(1) translateY(0);
+}
+
+.event-modal-header {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.event-modal-color {
+  width: 6px;
+  border-radius: 3px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.event-modal-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-modal-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.event-modal-calendar {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.event-modal-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xl);
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.event-modal-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.event-modal-body {
+  padding: var(--space-lg);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.event-modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.event-modal-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.event-modal-meta-icon {
+  width: 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.event-modal-description {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-light);
+}
+
+.event-modal-description-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-sm);
+}
+
+.event-modal-description-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.event-modal-description-text a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.event-modal-description-text a:hover {
+  text-decoration: underline;
+}
+
+.event-modal-no-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}

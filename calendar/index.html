@@ -190,6 +190,36 @@
     </main>
   </div>
   
+  <!-- Event Detail Modal -->
+  <div class="event-modal-overlay" id="eventModalOverlay">
+    <div class="event-modal" role="dialog" aria-labelledby="eventModalTitle">
+      <div class="event-modal-header">
+        <div class="event-modal-color"></div>
+        <div class="event-modal-title-section">
+          <h2 class="event-modal-title" id="eventModalTitle">Event Title</h2>
+          <div class="event-modal-calendar">Calendar Name</div>
+        </div>
+        <button type="button" class="event-modal-close" aria-label="Close">×</button>
+      </div>
+      <div class="event-modal-body">
+        <div class="event-modal-meta">
+          <div class="event-modal-meta-item">
+            <span class="event-modal-meta-icon">◈</span>
+            <span class="event-modal-date">Date</span>
+          </div>
+          <div class="event-modal-meta-item">
+            <span class="event-modal-meta-icon">◷</span>
+            <span class="event-modal-time">Time</span>
+          </div>
+        </div>
+        <div class="event-modal-description">
+          <div class="event-modal-description-label">Notes</div>
+          <div class="event-modal-description-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/filters.js"></script>

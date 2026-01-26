@@ -192,10 +192,10 @@ button {
 }
 
 /* =============================================================================
-   CALENDAR FILTERS - Compact card style
+   CALENDAR FILTERS - Card style
    ============================================================================= */
 .calendar-filters {
-  padding: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-light);
 }
@@ -204,36 +204,39 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: var(--space-sm);
 }
 
 .filter-label {
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  color: var(--text-primary);
 }
 
 .filter-actions {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .filter-action-btn {
-  padding: 4px 10px;
-  font-size: var(--font-size-xs);
+  padding: 6px 14px;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  border: none;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  background: var(--bg-tertiary);
+  border: 2px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  color: var(--accent-primary);
+  background: transparent;
   transition: all var(--transition-fast);
 }
 
 .filter-action-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  transform: translateY(-1px);
+}
+
+.filter-action-btn:active {
+  transform: translateY(0);
 }
 
 .calendar-toggles {

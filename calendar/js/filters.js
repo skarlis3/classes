@@ -26,7 +26,7 @@ const CalendarFilters = {
   },
   
   /**
-   * Render the calendar toggle buttons
+   * Render the calendar toggle buttons - sorted with active calendars first
    */
   renderToggles(containerId) {
     const container = document.getElementById(containerId);
@@ -34,7 +34,17 @@ const CalendarFilters = {
     
     container.innerHTML = '';
     
-    CONFIG.CALENDARS.forEach(cal => {
+    // Sort calendars: those with events first, then those without
+    const sortedCalendars = [...CONFIG.CALENDARS].sort((a, b) => {
+      const aHasEvents = this.calendarsWithEvents.has(a.id);
+      const bHasEvents = this.calendarsWithEvents.has(b.id);
+      
+      if (aHasEvents && !bHasEvents) return -1;
+      if (!aHasEvents && bHasEvents) return 1;
+      return 0; // Keep original order within each group
+    });
+    
+    sortedCalendars.forEach(cal => {
       const hasEvents = this.calendarsWithEvents.has(cal.id);
       const isActive = this.activeCalendars.has(cal.id);
       

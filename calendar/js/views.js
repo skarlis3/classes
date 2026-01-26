@@ -591,12 +591,38 @@ const CalendarViews = {
     // Set description
     if (descSection && descText) {
       if (event.description) {
-        // Convert URLs to links and preserve line breaks
-        let desc = this.escapeHtml(event.description);
-        desc = desc.replace(
-          /(https?:\/\/[^\s<]+)/g,
-          '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
-        );
+        // Google Calendar descriptions may contain HTML
+        // First, extract href URLs from any existing <a> tags
+        let desc = event.description;
+        
+        // Replace <a href="...">text</a> with just the URL
+        desc = desc.replace(/<a[^>]*href=["']([^"']*)["'][^>]*>.*?<\/a>/gi, '$1');
+        
+        // Remove any other HTML tags
+        desc = desc.replace(/<[^>]+>/g, '');
+        
+        // Decode HTML entities
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = desc;
+        desc = textarea.value;
+        
+        // Now find plain URLs and store them
+        const urlPlaceholders = [];
+        desc = desc.replace(/(https?:\/\/[^\s]+)/g, (match) => {
+          const index = urlPlaceholders.length;
+          urlPlaceholders.push(match);
+          return `__URL_PLACEHOLDER_${index}__`;
+        });
+        
+        // Escape remaining text for safety
+        desc = this.escapeHtml(desc);
+        
+        // Restore URLs as clickable links
+        desc = desc.replace(/__URL_PLACEHOLDER_(\d+)__/g, (match, index) => {
+          const url = urlPlaceholders[parseInt(index)];
+          return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+        });
+        
         descText.innerHTML = desc;
         descSection.style.display = 'block';
       } else {

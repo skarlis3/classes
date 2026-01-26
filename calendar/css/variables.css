@@ -1,0 +1,249 @@
+/* =============================================================================
+   CSS VARIABLES - THEMING & COLORS
+   
+   Edit calendar colors here to add new color families.
+   ============================================================================= */
+
+:root {
+  /* Font sizes - modified by data-font-size attribute */
+  --font-size-base: 16px;
+  --font-size-sm: 0.875em;
+  --font-size-xs: 0.8em;
+  --font-size-lg: 1.125em;
+  --font-size-xl: 1.25em;
+  --font-size-2xl: 1.5em;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  
+  /* Minimum touch target (WCAG 2.1 AAA) */
+  --touch-target-min: 44px;
+}
+
+/* =============================================================================
+   FONT SIZE MODIFIERS
+   ============================================================================= */
+[data-font-size="small"] { --font-size-base: 14px; }
+[data-font-size="medium"] { --font-size-base: 16px; }
+[data-font-size="large"] { --font-size-base: 18px; }
+[data-font-size="x-large"] { --font-size-base: 20px; }
+
+/* =============================================================================
+   LIGHT THEME
+   ============================================================================= */
+[data-theme="light"] {
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F0F0F0;
+  --bg-hover: #E5E5E5;
+  --bg-selected: #DBEAFE;
+  
+  /* AAA contrast ratios against backgrounds */
+  --text-primary: #1A1A1A;      /* 16.1:1 on #FAFAFA */
+  --text-secondary: #404040;    /* 9.4:1 on #FAFAFA */
+  --text-muted: #595959;        /* 7.0:1 on #FAFAFA */
+  --text-on-accent: #FFFFFF;
+  
+  --border-light: #D4D4D4;
+  --border-medium: #A3A3A3;
+  
+  --accent-primary: #1D4ED8;    /* 7.1:1 on white */
+  --accent-hover: #1E40AF;
+  
+  /* Calendar event colors - left border style for AAA compliance */
+  /* 1170 - Purples */
+  --cal-1170-primary-border: #6D28D9;
+  --cal-1170-primary-bg: #F5F3FF;
+  --cal-1170-primary-text: #4C1D95;
+  --cal-1170-secondary-border: #8B5CF6;
+  --cal-1170-secondary-bg: #F5F3FF;
+  --cal-1170-secondary-text: #5B21B6;
+  
+  /* 1181 - Greens */
+  --cal-1181-primary-border: #047857;
+  --cal-1181-primary-bg: #ECFDF5;
+  --cal-1181-primary-text: #065F46;
+  --cal-1181-secondary-border: #059669;
+  --cal-1181-secondary-bg: #ECFDF5;
+  --cal-1181-secondary-text: #047857;
+  --cal-1181-tertiary-border: #0D9488;
+  --cal-1181-tertiary-bg: #F0FDFA;
+  --cal-1181-tertiary-text: #0F766E;
+  
+  /* 1190 - Blues */
+  --cal-1190-primary-border: #1D4ED8;
+  --cal-1190-primary-bg: #EFF6FF;
+  --cal-1190-primary-text: #1E40AF;
+  --cal-1190-secondary-border: #2563EB;
+  --cal-1190-secondary-bg: #EFF6FF;
+  --cal-1190-secondary-text: #1D4ED8;
+  
+  /* 2740 - Reds */
+  --cal-2740-primary-border: #B91C1C;
+  --cal-2740-primary-bg: #FEF2F2;
+  --cal-2740-primary-text: #991B1B;
+  --cal-2740-secondary-border: #DC2626;
+  --cal-2740-secondary-bg: #FEF2F2;
+  --cal-2740-secondary-text: #B91C1C;
+  
+  /* Calendar UI colors */
+  --today-bg: #DBEAFE;
+  --today-border: #1D4ED8;
+  --today-number-bg: #1D4ED8;
+  --today-number-text: #FFFFFF;
+  --selected-week-bg: #F0F9FF;
+  --other-month-text: #737373;
+  --other-month-bg: #F5F5F5;
+  --event-dot: #1D4ED8;
+}
+
+/* =============================================================================
+   DARK THEME
+   ============================================================================= */
+[data-theme="dark"] {
+  --bg-primary: #0D0D0D;
+  --bg-secondary: #171717;
+  --bg-tertiary: #262626;
+  --bg-hover: #363636;
+  --bg-selected: #1E3A5F;
+  
+  /* AAA contrast ratios against dark backgrounds */
+  --text-primary: #F5F5F5;      /* 17.4:1 on #0D0D0D */
+  --text-secondary: #D4D4D4;    /* 12.6:1 on #0D0D0D */
+  --text-muted: #A3A3A3;        /* 7.5:1 on #0D0D0D */
+  --text-on-accent: #FFFFFF;
+  
+  --border-light: #363636;
+  --border-medium: #525252;
+  
+  --accent-primary: #60A5FA;    /* 8.6:1 on #171717 */
+  --accent-hover: #93C5FD;
+  
+  /* Calendar event colors - softer for dark mode, maintaining contrast */
+  /* 1170 - Purples */
+  --cal-1170-primary-border: #A78BFA;
+  --cal-1170-primary-bg: #1E1533;
+  --cal-1170-primary-text: #C4B5FD;
+  --cal-1170-secondary-border: #C4B5FD;
+  --cal-1170-secondary-bg: #1E1533;
+  --cal-1170-secondary-text: #DDD6FE;
+  
+  /* 1181 - Greens */
+  --cal-1181-primary-border: #34D399;
+  --cal-1181-primary-bg: #132620;
+  --cal-1181-primary-text: #6EE7B7;
+  --cal-1181-secondary-border: #6EE7B7;
+  --cal-1181-secondary-bg: #132620;
+  --cal-1181-secondary-text: #A7F3D0;
+  --cal-1181-tertiary-border: #5EEAD4;
+  --cal-1181-tertiary-bg: #132626;
+  --cal-1181-tertiary-text: #99F6E4;
+  
+  /* 1190 - Blues */
+  --cal-1190-primary-border: #60A5FA;
+  --cal-1190-primary-bg: #172033;
+  --cal-1190-primary-text: #93C5FD;
+  --cal-1190-secondary-border: #93C5FD;
+  --cal-1190-secondary-bg: #172033;
+  --cal-1190-secondary-text: #BFDBFE;
+  
+  /* 2740 - Reds */
+  --cal-2740-primary-border: #F87171;
+  --cal-2740-primary-bg: #2D1515;
+  --cal-2740-primary-text: #FCA5A5;
+  --cal-2740-secondary-border: #FCA5A5;
+  --cal-2740-secondary-bg: #2D1515;
+  --cal-2740-secondary-text: #FECACA;
+  
+  /* Calendar UI colors */
+  --today-bg: #1E3A5F;
+  --today-border: #60A5FA;
+  --today-number-bg: #60A5FA;
+  --today-number-text: #0D0D0D;
+  --selected-week-bg: #1A2744;
+  --other-month-text: #525252;
+  --other-month-bg: #141414;
+  --event-dot: #60A5FA;
+}
+
+/* =============================================================================
+   CALENDAR COLOR CLASSES
+   Applied to events via their colorClass from config.js
+   ============================================================================= */
+
+/* 1170 Purples */
+.cal-1170-primary {
+  border-left-color: var(--cal-1170-primary-border);
+  background-color: var(--cal-1170-primary-bg);
+  color: var(--cal-1170-primary-text);
+}
+.cal-1170-secondary {
+  border-left-color: var(--cal-1170-secondary-border);
+  background-color: var(--cal-1170-secondary-bg);
+  color: var(--cal-1170-secondary-text);
+}
+
+/* 1181 Greens */
+.cal-1181-primary {
+  border-left-color: var(--cal-1181-primary-border);
+  background-color: var(--cal-1181-primary-bg);
+  color: var(--cal-1181-primary-text);
+}
+.cal-1181-secondary {
+  border-left-color: var(--cal-1181-secondary-border);
+  background-color: var(--cal-1181-secondary-bg);
+  color: var(--cal-1181-secondary-text);
+}
+.cal-1181-tertiary {
+  border-left-color: var(--cal-1181-tertiary-border);
+  background-color: var(--cal-1181-tertiary-bg);
+  color: var(--cal-1181-tertiary-text);
+}
+
+/* 1190 Blues */
+.cal-1190-primary {
+  border-left-color: var(--cal-1190-primary-border);
+  background-color: var(--cal-1190-primary-bg);
+  color: var(--cal-1190-primary-text);
+}
+.cal-1190-secondary {
+  border-left-color: var(--cal-1190-secondary-border);
+  background-color: var(--cal-1190-secondary-bg);
+  color: var(--cal-1190-secondary-text);
+}
+
+/* 2740 Reds */
+.cal-2740-primary {
+  border-left-color: var(--cal-2740-primary-border);
+  background-color: var(--cal-2740-primary-bg);
+  color: var(--cal-2740-primary-text);
+}
+.cal-2740-secondary {
+  border-left-color: var(--cal-2740-secondary-border);
+  background-color: var(--cal-2740-secondary-bg);
+  color: var(--cal-2740-secondary-text);
+}
+
+/* Color dot indicators for filter toggles */
+.color-dot.cal-1170-primary { background-color: var(--cal-1170-primary-border); }
+.color-dot.cal-1170-secondary { background-color: var(--cal-1170-secondary-border); }
+.color-dot.cal-1181-primary { background-color: var(--cal-1181-primary-border); }
+.color-dot.cal-1181-secondary { background-color: var(--cal-1181-secondary-border); }
+.color-dot.cal-1181-tertiary { background-color: var(--cal-1181-tertiary-border); }
+.color-dot.cal-1190-primary { background-color: var(--cal-1190-primary-border); }
+.color-dot.cal-1190-secondary { background-color: var(--cal-1190-secondary-border); }
+.color-dot.cal-2740-primary { background-color: var(--cal-2740-primary-border); }
+.color-dot.cal-2740-secondary { background-color: var(--cal-2740-secondary-border); }

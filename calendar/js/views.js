@@ -335,6 +335,198 @@ const CalendarViews = {
   },
   
   // =========================================================================
+  // Focus View (3 weeks - current + 2 following)
+  // =========================================================================
+  
+  // Separate anchor for focus view
+  focusAnchor: null,
+  
+  initFocusAnchor() {
+    if (!this.focusAnchor) {
+      this.focusAnchor = this.getWeekStart(new Date());
+    }
+  },
+  
+  renderFocusView() {
+    this.initFocusAnchor();
+    this.renderFocusGrid();
+    this.renderFocusUpcoming();
+  },
+  
+  renderFocusGrid() {
+    const container = document.getElementById('focusGrid');
+    const titleEl = document.getElementById('focusTitle');
+    if (!container) return;
+    
+    this.initFocusAnchor();
+    
+    // Calculate date range for title
+    const startDate = new Date(this.focusAnchor);
+    const endDate = new Date(this.focusAnchor);
+    endDate.setDate(endDate.getDate() + 20); // 3 weeks - 1 day
+    
+    if (titleEl) {
+      if (startDate.getMonth() === endDate.getMonth()) {
+        titleEl.textContent = `${this.monthNames[startDate.getMonth()]} ${startDate.getFullYear()}`;
+      } else if (startDate.getFullYear() === endDate.getFullYear()) {
+        titleEl.textContent = `${this.monthNamesShort[startDate.getMonth()]} – ${this.monthNamesShort[endDate.getMonth()]} ${startDate.getFullYear()}`;
+      } else {
+        titleEl.textContent = `${this.monthNamesShort[startDate.getMonth()]} ${startDate.getFullYear()} – ${this.monthNamesShort[endDate.getMonth()]} ${endDate.getFullYear()}`;
+      }
+    }
+    
+    let html = '';
+    
+    // Generate 3 weeks (21 days)
+    for (let i = 0; i < 21; i++) {
+      const currentDate = new Date(this.focusAnchor);
+      currentDate.setDate(currentDate.getDate() + i);
+      
+      const isToday = this.isToday(currentDate);
+      const dayEvents = this.getEventsForDay(currentDate);
+      const isPastDay = this.isPast(currentDate) && !isToday;
+      
+      let classes = 'month-day';
+      if (isToday) classes += ' today';
+      if (isPastDay) classes += ' past-day';
+      
+      html += `
+        <div class="${classes}" data-date="${currentDate.toISOString()}">
+          <div class="day-number">${currentDate.getDate()}</div>
+          <div class="day-events">
+            ${this.renderDayEvents(dayEvents, 5)}
+          </div>
+        </div>
+      `;
+    }
+    
+    container.innerHTML = html;
+    
+    // Add click handlers for events
+    container.querySelectorAll('.day-event').forEach(eventEl => {
+      const handler = (e) => {
+        e.stopPropagation();
+        const eventId = eventEl.dataset.eventId;
+        const event = this.eventCache?.[eventId];
+        if (event) {
+          this.showEventModal(event);
+        }
+      };
+      
+      eventEl.addEventListener('click', handler);
+      eventEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler(e);
+        }
+      });
+    });
+  },
+  
+  renderFocusUpcoming() {
+    const container = document.getElementById('focusUpcomingList');
+    const titleEl = document.getElementById('focusUpcomingSubtitle');
+    if (!container) return;
+    
+    // Get events for the next 14 days
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 14);
+    
+    if (titleEl) {
+      titleEl.textContent = 'Next 2 weeks';
+    }
+    
+    // Collect days that have events
+    const daysWithEvents = [];
+    const currentDate = new Date(startDate);
+    
+    while (currentDate < endDate) {
+      const dayEvents = this.getEventsForDay(currentDate);
+      if (dayEvents.length > 0) {
+        daysWithEvents.push({
+          date: new Date(currentDate),
+          events: dayEvents,
+          isToday: this.isToday(currentDate)
+        });
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    if (daysWithEvents.length === 0) {
+      container.innerHTML = '<div class="upcoming-no-events">No upcoming events</div>';
+      return;
+    }
+    
+    let html = '';
+    
+    daysWithEvents.forEach(day => {
+      html += `
+        <div class="upcoming-day${day.isToday ? ' today' : ''}">
+          <div class="upcoming-day-header">
+            <span class="upcoming-day-name">${day.isToday ? 'Today' : this.dayNamesFull[day.date.getDay()]}</span>
+            <span class="upcoming-day-date">${this.monthNamesShort[day.date.getMonth()]} ${day.date.getDate()}</span>
+          </div>
+          ${day.events.map((event, index) => {
+            const eventId = `focus-upcoming-${event.calendarId}-${event.id || index}`;
+            this.eventCache = this.eventCache || {};
+            this.eventCache[eventId] = event;
+            return `
+              <div class="upcoming-event ${event.colorClass}" 
+                   data-event-id="${eventId}"
+                   role="button"
+                   tabindex="0">
+                <div class="upcoming-event-time">${this.formatTime(event)}</div>
+                <div class="upcoming-event-title">${this.escapeHtml(event.summary)}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    });
+    
+    container.innerHTML = html;
+    
+    // Add click handlers for events
+    container.querySelectorAll('.upcoming-event').forEach(eventEl => {
+      const handler = (e) => {
+        const eventId = eventEl.dataset.eventId;
+        const event = this.eventCache?.[eventId];
+        if (event) {
+          this.showEventModal(event);
+        }
+      };
+      
+      eventEl.addEventListener('click', handler);
+      eventEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler(e);
+        }
+      });
+    });
+  },
+  
+  focusPrevWeek() {
+    this.initFocusAnchor();
+    this.focusAnchor.setDate(this.focusAnchor.getDate() - 7);
+    this.renderFocusView();
+  },
+  
+  focusNextWeek() {
+    this.initFocusAnchor();
+    this.focusAnchor.setDate(this.focusAnchor.getDate() + 7);
+    this.renderFocusView();
+  },
+  
+  focusGoToToday() {
+    this.focusAnchor = this.getWeekStart(new Date());
+    this.renderFocusView();
+  },
+  
+  // =========================================================================
   // Compact View (Mini Month + Agenda)
   // =========================================================================
   
@@ -491,9 +683,14 @@ const CalendarViews = {
   
   refreshCurrentView() {
     const fullViewActive = document.getElementById('fullViewTab')?.classList.contains('active');
+    const focusViewActive = document.getElementById('focusViewTab')?.classList.contains('active');
+    const compactViewActive = document.getElementById('compactViewTab')?.classList.contains('active');
+    
     if (fullViewActive) {
       this.renderFullView();
-    } else {
+    } else if (focusViewActive) {
+      this.renderFocusView();
+    } else if (compactViewActive) {
       this.renderCompactView();
     }
   },

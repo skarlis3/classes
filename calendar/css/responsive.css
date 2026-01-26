@@ -4,19 +4,22 @@
 
 /* Medium screens - narrower sidebar */
 @media (max-width: 1100px) {
-  .full-calendar-view {
-    grid-template-columns: 1fr 300px;
+  .full-calendar-view,
+  .focus-calendar-view {
+    grid-template-columns: 1fr 280px;
   }
 }
 
 /* Smaller screens - stack layout */
 @media (max-width: 900px) {
-  .full-calendar-view {
+  .full-calendar-view,
+  .focus-calendar-view {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
   }
   
-  .month-section {
+  .month-section,
+  .focus-section {
     border-right: none;
     border-bottom: 1px solid var(--border-light);
   }
@@ -33,6 +36,22 @@
   .mini-month-section {
     border-right: none;
     border-bottom: 1px solid var(--border-light);
+  }
+  
+  .class-selector-bar {
+    padding: var(--space-xs) var(--space-sm);
+  }
+  
+  .class-selector-inner {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+  
+  .selector-actions {
+    width: 100%;
+    justify-content: flex-end;
+    order: -1;
+    margin-bottom: var(--space-xs);
   }
 }
 
@@ -64,10 +83,23 @@
     width: 100%;
   }
   
-  .cal-toggle {
-    min-height: 40px;
-    padding: var(--space-xs) var(--space-sm);
+  .class-group {
+    padding: 4px 8px;
+  }
+  
+  .class-group-label {
     font-size: var(--font-size-xs);
+    padding-right: 4px;
+  }
+  
+  .section-toggle {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+  }
+  
+  .section-toggle .section-dot {
+    width: 6px;
+    height: 6px;
   }
 }
 
@@ -142,11 +174,13 @@
    ============================================================================= */
 @media print {
   .app-header,
-  .calendar-filters {
+  .calendar-filters,
+  .class-selector-bar {
     display: none;
   }
   
-  .full-calendar-view {
+  .full-calendar-view,
+  .focus-calendar-view {
     display: block;
   }
   
@@ -154,7 +188,8 @@
     display: none;
   }
   
-  .month-section {
+  .month-section,
+  .focus-section {
     border: none;
   }
   

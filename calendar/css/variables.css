@@ -270,12 +270,12 @@
 }
 
 /* Color dots */
-.color-dot.cal-1170-primary { background-color: var(--cal-1170-primary-border); }
-.color-dot.cal-1170-secondary { background-color: var(--cal-1170-secondary-border); }
-.color-dot.cal-1181-primary { background-color: var(--cal-1181-primary-border); }
-.color-dot.cal-1181-secondary { background-color: var(--cal-1181-secondary-border); }
-.color-dot.cal-1181-tertiary { background-color: var(--cal-1181-tertiary-border); }
-.color-dot.cal-1190-primary { background-color: var(--cal-1190-primary-border); }
-.color-dot.cal-1190-secondary { background-color: var(--cal-1190-secondary-border); }
-.color-dot.cal-2740-primary { background-color: var(--cal-2740-primary-border); }
-.color-dot.cal-2740-secondary { background-color: var(--cal-2740-secondary-border); }
+.color-dot.cal-1170-primary, .section-dot.cal-1170-primary { background-color: var(--cal-1170-primary-border); }
+.color-dot.cal-1170-secondary, .section-dot.cal-1170-secondary { background-color: var(--cal-1170-secondary-border); }
+.color-dot.cal-1181-primary, .section-dot.cal-1181-primary { background-color: var(--cal-1181-primary-border); }
+.color-dot.cal-1181-secondary, .section-dot.cal-1181-secondary { background-color: var(--cal-1181-secondary-border); }
+.color-dot.cal-1181-tertiary, .section-dot.cal-1181-tertiary { background-color: var(--cal-1181-tertiary-border); }
+.color-dot.cal-1190-primary, .section-dot.cal-1190-primary { background-color: var(--cal-1190-primary-border); }
+.color-dot.cal-1190-secondary, .section-dot.cal-1190-secondary { background-color: var(--cal-1190-secondary-border); }
+.color-dot.cal-2740-primary, .section-dot.cal-2740-primary { background-color: var(--cal-2740-primary-border); }
+.color-dot.cal-2740-secondary, .section-dot.cal-2740-secondary { background-color: var(--cal-2740-secondary-border); }

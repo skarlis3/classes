@@ -192,7 +192,184 @@ button {
 }
 
 /* =============================================================================
-   CALENDAR FILTERS - Card style
+   CLASS SELECTOR BAR - Horizontal grouped selector
+   ============================================================================= */
+.class-selector-bar {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  padding: var(--space-sm) var(--space-md);
+  flex-shrink: 0;
+}
+
+.class-selector-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.selector-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.class-groups {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+/* Individual class group card */
+.class-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-tertiary);
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.class-group.has-events {
+  border-color: var(--border-light);
+}
+
+.class-group.no-events {
+  opacity: 0.4;
+}
+
+/* Class number label */
+.class-group-label {
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  color: var(--text-primary);
+  padding-right: 6px;
+  border-right: 2px solid var(--border-light);
+  margin-right: 2px;
+}
+
+.class-group.no-events .class-group-label {
+  text-decoration: line-through;
+}
+
+/* Section toggles within group */
+.class-group-sections {
+  display: flex;
+  gap: 4px;
+}
+
+.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.section-toggle:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.section-toggle.active {
+  background: var(--bg-secondary);
+  border-color: currentColor;
+}
+
+.section-toggle .section-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.section-toggle:not(.active) .section-dot {
+  opacity: 0.4;
+}
+
+.section-toggle.no-events {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+/* Color-coded group backgrounds */
+.class-group[data-class="1170"] {
+  background: var(--cal-1170-primary-bg);
+}
+.class-group[data-class="1170"] .class-group-label {
+  color: var(--cal-1170-primary-text);
+  border-color: var(--cal-1170-primary-border);
+}
+.class-group[data-class="1170"].has-events {
+  border-color: var(--cal-1170-primary-border);
+}
+.class-group[data-class="1170"] .section-toggle.active {
+  color: var(--cal-1170-primary-text);
+}
+
+.class-group[data-class="1181"] {
+  background: var(--cal-1181-primary-bg);
+}
+.class-group[data-class="1181"] .class-group-label {
+  color: var(--cal-1181-primary-text);
+  border-color: var(--cal-1181-primary-border);
+}
+.class-group[data-class="1181"].has-events {
+  border-color: var(--cal-1181-primary-border);
+}
+.class-group[data-class="1181"] .section-toggle.active {
+  color: var(--cal-1181-primary-text);
+}
+
+.class-group[data-class="1190"] {
+  background: var(--cal-1190-primary-bg);
+}
+.class-group[data-class="1190"] .class-group-label {
+  color: var(--cal-1190-primary-text);
+  border-color: var(--cal-1190-primary-border);
+}
+.class-group[data-class="1190"].has-events {
+  border-color: var(--cal-1190-primary-border);
+}
+.class-group[data-class="1190"] .section-toggle.active {
+  color: var(--cal-1190-primary-text);
+}
+
+.class-group[data-class="2740"] {
+  background: var(--cal-2740-primary-bg);
+}
+.class-group[data-class="2740"] .class-group-label {
+  color: var(--cal-2740-primary-text);
+  border-color: var(--cal-2740-primary-border);
+}
+.class-group[data-class="2740"].has-events {
+  border-color: var(--cal-2740-primary-border);
+}
+.class-group[data-class="2740"] .section-toggle.active {
+  color: var(--cal-2740-primary-text);
+}
+
+/* Compact groups - vertical layout */
+.compact-groups {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compact-groups .class-group {
+  width: 100%;
+}
+
+/* =============================================================================
+   CALENDAR FILTERS - Legacy support (keeping for now)
    ============================================================================= */
 .calendar-filters {
   padding: var(--space-sm) var(--space-md);

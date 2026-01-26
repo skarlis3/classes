@@ -58,6 +58,17 @@ const App = {
       CalendarViews.nextWeek();
     });
     
+    // Focus view navigation
+    document.getElementById('focusPrev')?.addEventListener('click', () => {
+      CalendarViews.focusPrevWeek();
+    });
+    document.getElementById('focusNext')?.addEventListener('click', () => {
+      CalendarViews.focusNextWeek();
+    });
+    document.getElementById('focusTodayBtn')?.addEventListener('click', () => {
+      CalendarViews.focusGoToToday();
+    });
+    
     // Filter actions
     document.querySelectorAll('.show-all-btn').forEach(btn => {
       btn.addEventListener('click', () => CalendarFilters.showAll());
@@ -139,6 +150,8 @@ const App = {
     
     if (tabId === 'fullViewTab') {
       CalendarViews.renderFullView();
+    } else if (tabId === 'focusViewTab') {
+      CalendarViews.renderFocusView();
     } else if (tabId === 'compactViewTab') {
       CalendarViews.renderCompactView();
     }

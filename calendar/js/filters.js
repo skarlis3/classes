@@ -1,5 +1,6 @@
 /**
  * Filters Module - Calendar Toggle and Filtering Logic
+ * Now with grouped class selector
  */
 
 const CalendarFilters = {
@@ -21,48 +22,88 @@ const CalendarFilters = {
     // Activate all calendars with events by default
     this.activeCalendars = new Set(this.calendarsWithEvents);
     
-    this.renderToggles('calendarToggles');
-    this.renderToggles('compactCalendarToggles');
+    // Render grouped selectors in all containers
+    this.renderGroupedToggles('classGroups');
+    this.renderGroupedToggles('focusClassGroups');
+    this.renderGroupedToggles('compactClassGroups');
   },
   
   /**
-   * Render the calendar toggle buttons - sorted with active calendars first
+   * Get calendars for a group
    */
-  renderToggles(containerId) {
+  getCalendarsForGroup(groupId) {
+    return CONFIG.CALENDARS.filter(cal => cal.groupId === groupId);
+  },
+  
+  /**
+   * Render grouped class selector
+   */
+  renderGroupedToggles(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
     container.innerHTML = '';
     
-    // Sort calendars: those with events first, then those without
-    const sortedCalendars = [...CONFIG.CALENDARS].sort((a, b) => {
-      const aHasEvents = this.calendarsWithEvents.has(a.id);
-      const bHasEvents = this.calendarsWithEvents.has(b.id);
-      
+    // Sort groups: those with any events first
+    const sortedGroups = [...CONFIG.CALENDAR_GROUPS].sort((a, b) => {
+      const aCalendars = this.getCalendarsForGroup(a.id);
+      const bCalendars = this.getCalendarsForGroup(b.id);
+      const aHasEvents = aCalendars.some(cal => this.calendarsWithEvents.has(cal.id));
+      const bHasEvents = bCalendars.some(cal => this.calendarsWithEvents.has(cal.id));
       if (aHasEvents && !bHasEvents) return -1;
       if (!aHasEvents && bHasEvents) return 1;
-      return 0; // Keep original order within each group
+      return 0;
     });
     
-    sortedCalendars.forEach(cal => {
-      const hasEvents = this.calendarsWithEvents.has(cal.id);
-      const isActive = this.activeCalendars.has(cal.id);
+    sortedGroups.forEach(group => {
+      const calendars = this.getCalendarsForGroup(group.id);
+      const groupHasEvents = calendars.some(cal => this.calendarsWithEvents.has(cal.id));
       
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'cal-toggle';
-      if (isActive) btn.classList.add('active');
-      if (!hasEvents) btn.classList.add('no-events');
-      btn.dataset.calendarId = cal.id;
+      const groupEl = document.createElement('div');
+      groupEl.className = 'class-group';
+      groupEl.dataset.class = group.id;
+      if (groupHasEvents) {
+        groupEl.classList.add('has-events');
+      } else {
+        groupEl.classList.add('no-events');
+      }
       
-      btn.innerHTML = `
-        <span class="color-dot ${cal.colorClass}"></span>
-        <span class="cal-name">${cal.name}</span>
-      `;
+      // Class label
+      const label = document.createElement('span');
+      label.className = 'class-group-label';
+      label.textContent = group.name;
+      groupEl.appendChild(label);
       
-      btn.addEventListener('click', () => this.toggleCalendar(cal.id));
+      // Section toggles
+      const sectionsEl = document.createElement('div');
+      sectionsEl.className = 'class-group-sections';
       
-      container.appendChild(btn);
+      calendars.forEach(cal => {
+        const hasEvents = this.calendarsWithEvents.has(cal.id);
+        const isActive = this.activeCalendars.has(cal.id);
+        
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'section-toggle';
+        if (isActive) btn.classList.add('active');
+        if (!hasEvents) btn.classList.add('no-events');
+        btn.dataset.calendarId = cal.id;
+        
+        btn.innerHTML = `
+          <span class="section-dot ${cal.colorClass}"></span>
+          <span class="section-name">${cal.name}</span>
+        `;
+        
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggleCalendar(cal.id);
+        });
+        
+        sectionsEl.appendChild(btn);
+      });
+      
+      groupEl.appendChild(sectionsEl);
+      container.appendChild(groupEl);
     });
   },
   
@@ -76,7 +117,7 @@ const CalendarFilters = {
       this.activeCalendars.add(calendarId);
     }
     
-    // Update all toggle button states
+    // Update all toggle button states across all containers
     document.querySelectorAll(`[data-calendar-id="${calendarId}"]`).forEach(btn => {
       btn.classList.toggle('active', this.activeCalendars.has(calendarId));
     });
@@ -108,7 +149,7 @@ const CalendarFilters = {
    * Update all toggle button visual states
    */
   updateAllToggleStates() {
-    document.querySelectorAll('.cal-toggle').forEach(btn => {
+    document.querySelectorAll('.section-toggle').forEach(btn => {
       const calId = btn.dataset.calendarId;
       btn.classList.toggle('active', this.activeCalendars.has(calId));
     });

@@ -18,6 +18,7 @@
       
       <nav class="header-tabs">
         <button type="button" class="tab-btn active" data-tab="fullViewTab">Full</button>
+        <button type="button" class="tab-btn" data-tab="focusViewTab">Focus</button>
         <button type="button" class="tab-btn" data-tab="compactViewTab">Compact</button>
         <button type="button" class="tab-btn" data-tab="instructionsTab">Help</button>
       </nav>
@@ -45,8 +46,18 @@
       
       <!-- Full View Tab -->
       <div class="tab-content active" id="fullViewTab">
+        <!-- Class Selector Bar -->
+        <div class="class-selector-bar">
+          <div class="class-selector-inner">
+            <div class="selector-actions">
+              <button type="button" class="filter-action-btn show-all-btn">All</button>
+              <button type="button" class="filter-action-btn hide-all-btn">None</button>
+            </div>
+            <div class="class-groups" id="classGroups"></div>
+          </div>
+        </div>
+        
         <div class="full-calendar-view">
-          
           <!-- Month Grid (Left) -->
           <section class="month-section">
             <div class="month-header">
@@ -71,21 +82,8 @@
             </div>
           </section>
           
-          <!-- Sidebar (Right) - Filters + Upcoming -->
+          <!-- Sidebar (Right) - Upcoming only -->
           <aside class="calendar-sidebar">
-            <!-- Filters -->
-            <div class="calendar-filters">
-              <div class="filter-header">
-                <span class="filter-label">Calendars</span>
-                <div class="filter-actions">
-                  <button type="button" class="filter-action-btn show-all-btn">All</button>
-                  <button type="button" class="filter-action-btn hide-all-btn">None</button>
-                </div>
-              </div>
-              <div class="calendar-toggles" id="calendarToggles"></div>
-            </div>
-            
-            <!-- Upcoming -->
             <section class="upcoming-section">
               <div class="upcoming-header">
                 <div class="upcoming-title">Upcoming</div>
@@ -95,6 +93,57 @@
             </section>
           </aside>
           
+        </div>
+      </div>
+      
+      <!-- Focus View Tab (3 weeks) -->
+      <div class="tab-content" id="focusViewTab">
+        <!-- Class Selector Bar -->
+        <div class="class-selector-bar">
+          <div class="class-selector-inner">
+            <div class="selector-actions">
+              <button type="button" class="filter-action-btn show-all-btn">All</button>
+              <button type="button" class="filter-action-btn hide-all-btn">None</button>
+            </div>
+            <div class="class-groups" id="focusClassGroups"></div>
+          </div>
+        </div>
+        
+        <div class="focus-calendar-view">
+          <!-- 3 Week Grid (Left) -->
+          <section class="focus-section">
+            <div class="month-header">
+              <h2 class="month-title" id="focusTitle">January 2026</h2>
+              <div class="month-nav">
+                <button type="button" class="month-nav-btn" id="focusPrev" title="Previous week">←</button>
+                <button type="button" class="month-nav-btn today-btn" id="focusTodayBtn">Today</button>
+                <button type="button" class="month-nav-btn" id="focusNext" title="Next week">→</button>
+              </div>
+            </div>
+            <div class="focus-grid">
+              <div class="month-weekdays">
+                <div class="weekday-header">Sun</div>
+                <div class="weekday-header">Mon</div>
+                <div class="weekday-header">Tue</div>
+                <div class="weekday-header">Wed</div>
+                <div class="weekday-header">Thu</div>
+                <div class="weekday-header">Fri</div>
+                <div class="weekday-header">Sat</div>
+              </div>
+              <div class="focus-days" id="focusGrid"></div>
+            </div>
+          </section>
+          
+          <!-- Sidebar (Right) - Upcoming -->
+          <aside class="calendar-sidebar">
+            <section class="upcoming-section">
+              <div class="upcoming-header">
+                <div class="upcoming-title">Upcoming</div>
+                <div class="upcoming-subtitle" id="focusUpcomingSubtitle">Next 2 weeks</div>
+              </div>
+              <div class="upcoming-list" id="focusUpcomingList"></div>
+            </section>
+          </aside>
         </div>
       </div>
       
@@ -113,16 +162,16 @@
             </div>
             <div class="mini-month-grid" id="miniMonthGrid"></div>
             
-            <!-- Compact Filters -->
+            <!-- Compact Filters - grouped style -->
             <div class="compact-filters">
               <div class="filter-header">
-                <span class="filter-label">Calendars</span>
+                <span class="filter-label">Classes</span>
                 <div class="filter-actions">
                   <button type="button" class="filter-action-btn show-all-btn">All</button>
                   <button type="button" class="filter-action-btn hide-all-btn">None</button>
                 </div>
               </div>
-              <div class="calendar-toggles" id="compactCalendarToggles"></div>
+              <div class="class-groups compact-groups" id="compactClassGroups"></div>
             </div>
           </section>
           

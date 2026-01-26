@@ -1,9 +1,9 @@
 /* =============================================================================
-   CALENDAR STYLES - Month Grid, Upcoming Panel, Events
+   CALENDAR STYLES - Fun Rounded Design
    ============================================================================= */
 
 /* =============================================================================
-   FULL CALENDAR VIEW (Month + Sidebar with Filters & Upcoming)
+   FULL CALENDAR VIEW
    ============================================================================= */
 .full-calendar-view {
   flex: 1;
@@ -14,7 +14,7 @@
 }
 
 /* =============================================================================
-   MONTH SECTION (Left Side - Rolling 5 weeks)
+   MONTH SECTION
    ============================================================================= */
 .month-section {
   display: flex;
@@ -22,9 +22,9 @@
   border-right: 1px solid var(--border-light);
   min-height: 0;
   overflow: hidden;
+  background: var(--bg-secondary);
 }
 
-/* Month Header with Navigation */
 .month-header {
   display: flex;
   align-items: center;
@@ -36,14 +36,15 @@
 }
 
 .month-title {
+  font-family: var(--font-display);
   font-size: var(--font-size-xl);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
 .month-nav {
   display: flex;
-  gap: var(--space-xs);
+  gap: 6px;
 }
 
 .month-nav-btn {
@@ -53,17 +54,18 @@
   align-items: center;
   justify-content: center;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
+  border: none;
+  border-radius: var(--radius-md);
   font-size: var(--font-size-lg);
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: var(--text-muted);
   transition: all var(--transition-fast);
 }
 
 .month-nav-btn:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
 .today-btn {
@@ -71,6 +73,14 @@
   width: auto;
   min-width: auto;
   font-size: var(--font-size-sm);
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  border-radius: var(--radius-md);
+}
+
+.today-btn:hover {
+  background: var(--accent-hover);
+  color: var(--text-on-accent);
 }
 
 /* Month Grid */
@@ -91,11 +101,13 @@
 }
 
 .weekday-header {
-  padding: var(--space-xs) var(--space-xs);
+  padding: var(--space-xs);
   text-align: center;
   font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .month-days {
@@ -117,7 +129,7 @@
   min-height: 0;
   overflow: hidden;
   cursor: pointer;
-  transition: background var(--transition-fast);
+  transition: all var(--transition-fast);
   background: var(--bg-secondary);
 }
 
@@ -150,7 +162,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .month-day.in-selected-week {
@@ -163,7 +175,7 @@
 
 .day-number {
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 2px;
   flex-shrink: 0;
@@ -181,12 +193,12 @@
 
 .day-event {
   font-size: var(--font-size-xs);
-  padding: 2px var(--space-xs);
-  border-radius: 2px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
   border-left: 3px solid;
   flex-shrink: 0;
+  font-weight: 500;
   
-  /* Text wrapping with line clamp */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -198,12 +210,12 @@
 .day-more {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  padding: 2px var(--space-xs);
-  font-weight: 500;
+  padding: 2px 6px;
+  font-weight: 700;
 }
 
 /* =============================================================================
-   SIDEBAR (Right Side - Filters + Upcoming)
+   SIDEBAR
    ============================================================================= */
 .calendar-sidebar {
   display: flex;
@@ -230,13 +242,15 @@
 }
 
 .upcoming-title {
+  font-family: var(--font-display);
   font-size: var(--font-size-lg);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
 .upcoming-subtitle {
   font-size: var(--font-size-sm);
+  font-weight: 600;
   color: var(--text-muted);
 }
 
@@ -246,7 +260,6 @@
   padding: var(--space-sm);
 }
 
-/* Upcoming day grouping */
 .upcoming-day {
   margin-bottom: var(--space-md);
 }
@@ -261,7 +274,7 @@
   gap: var(--space-sm);
   margin-bottom: var(--space-xs);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 2px solid var(--border-light);
 }
 
 .upcoming-day.today .upcoming-day-header {
@@ -269,7 +282,7 @@
 }
 
 .upcoming-day-name {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
@@ -279,15 +292,17 @@
 
 .upcoming-day-date {
   font-size: var(--font-size-sm);
+  font-weight: 600;
   color: var(--text-muted);
 }
 
 .upcoming-event {
   padding: var(--space-sm) var(--space-md);
   margin-bottom: var(--space-xs);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   border-left: 4px solid;
   font-size: var(--font-size-sm);
+  font-weight: 500;
   line-height: 1.4;
   word-break: break-word;
 }
@@ -300,6 +315,7 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   margin-bottom: 2px;
+  font-weight: 600;
 }
 
 .upcoming-no-events {
@@ -307,10 +323,11 @@
   color: var(--text-muted);
   font-style: italic;
   text-align: center;
+  font-weight: 500;
 }
 
 /* =============================================================================
-   COMPACT/MINI VIEW (Small Screen Mode)
+   COMPACT VIEW
    ============================================================================= */
 .compact-calendar-view {
   flex: 1;
@@ -340,14 +357,15 @@
 }
 
 .mini-month-title {
+  font-family: var(--font-display);
   font-size: var(--font-size-lg);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
 .mini-month-nav {
   display: flex;
-  gap: var(--space-xs);
+  gap: 4px;
 }
 
 .mini-nav-btn {
@@ -357,10 +375,11 @@
   align-items: center;
   justify-content: center;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-light);
+  border: none;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: var(--text-muted);
   transition: all var(--transition-fast);
 }
 
@@ -379,7 +398,7 @@
 .mini-weekday {
   text-align: center;
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-muted);
   padding: var(--space-xs);
 }
@@ -390,6 +409,7 @@
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-sm);
+  font-weight: 600;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -408,7 +428,7 @@
 .mini-day.today {
   background: var(--today-number-bg);
   color: var(--today-number-text);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .mini-day.in-selected-week {
@@ -422,7 +442,7 @@
 .mini-day.has-events::after {
   content: '';
   position: absolute;
-  bottom: 2px;
+  bottom: 3px;
   left: 50%;
   transform: translateX(-50%);
   width: 4px;
@@ -442,7 +462,7 @@
   flex-shrink: 0;
 }
 
-/* Agenda Panel (Compact View) */
+/* Agenda Panel */
 .agenda-section {
   flex: 1;
   display: flex;
@@ -459,13 +479,15 @@
 }
 
 .agenda-title {
+  font-family: var(--font-display);
   font-size: var(--font-size-lg);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
 .agenda-range {
   font-size: var(--font-size-sm);
+  font-weight: 600;
   color: var(--text-muted);
 }
 
@@ -485,16 +507,17 @@
   gap: var(--space-sm);
   margin-bottom: var(--space-xs);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 2px solid var(--border-light);
 }
 
 .agenda-day-name {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
 .agenda-day-date {
   font-size: var(--font-size-sm);
+  font-weight: 600;
   color: var(--text-muted);
 }
 
@@ -509,9 +532,10 @@
 .agenda-event {
   padding: var(--space-sm) var(--space-md);
   margin-bottom: var(--space-xs);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   border-left: 4px solid;
   font-size: var(--font-size-sm);
+  font-weight: 500;
   line-height: 1.4;
   word-break: break-word;
 }
@@ -520,10 +544,12 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   margin-bottom: 2px;
+  font-weight: 600;
 }
 
 .agenda-no-events {
   color: var(--text-muted);
   font-style: italic;
   padding: var(--space-sm);
+  font-weight: 500;
 }

@@ -1,0 +1,286 @@
+/* ---------- tokens ---------- */
+:root {
+  --bg: #faf9f6;
+  --surface: #ffffff;
+  --sidebar-bg: #f2ede2;
+  --sidebar-hover: #e8e1d1;
+  --sidebar-active: #d9d0ba;
+  --text: #1a1a1a;
+  --text-muted: #555;
+  --border: #d8d1bf;
+  --link: #0e4a5c;
+  --link-hover: #082e3a;
+  --accent: #0e4a5c;
+  --note-bg: #fff4e0;
+  --note-border: #c07d18;
+  --tip-bg: #e7f0f5;
+  --tip-border: #3f7b92;
+  --req-bg: #e3f1ee;
+  --req-border: #2f7a6a;
+  --tag-core-bg: #1a4f3a;
+  --tag-flex-bg: #6b5015;
+  --sidebar-width: 280px;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+
+html { font-size: 17px; }
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+a:hover, a:focus { color: var(--link-hover); }
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1.25rem 2rem;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+  color: var(--accent);
+  line-height: 1.3;
+}
+.sidebar-subtitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.sidebar-group-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin: 1.25rem 0 0.35rem;
+  padding-left: 0.5rem;
+  font-weight: 600;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  min-height: 32px;
+}
+
+.sidebar a:hover { background: var(--sidebar-hover); }
+.sidebar a[aria-current="page"] {
+  background: var(--sidebar-active);
+  font-weight: 600;
+}
+
+/* ---------- main content ---------- */
+main.main {
+  padding: 2.5rem clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 70rem;
+}
+
+main h1 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+main > p:first-of-type {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+main h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.25rem;
+}
+main h3 { margin: 1.5rem 0 0.5rem; font-size: 1.1rem; }
+main h4 { margin: 1.25rem 0 0.4rem; font-size: 1rem; color: var(--text-muted); }
+
+main p, main ul, main ol { margin: 0 0 1rem; }
+main ul, main ol { padding-left: 1.5rem; }
+main li { margin-bottom: 0.35rem; }
+main li ul, main li ol { margin: 0.4rem 0 0.6rem; }
+
+main em { font-style: italic; }
+main strong { font-weight: 600; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+code {
+  background: #edeadf;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+
+/* ---------- callouts ---------- */
+.callout {
+  margin: 1rem 0 1.25rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--note-border);
+  background: var(--note-bg);
+  border-radius: 0 6px 6px 0;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout .callout-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--note-border);
+  margin-right: 0.35rem;
+}
+
+.callout.tip {
+  border-left-color: var(--tip-border);
+  background: var(--tip-bg);
+}
+.callout.tip .callout-label { color: var(--tip-border); }
+
+.callout.req {
+  border-left-color: var(--req-border);
+  background: var(--req-bg);
+}
+.callout.req .callout-label { color: var(--req-border); }
+
+/* ---------- tables ---------- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.95rem;
+  background: var(--surface);
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--sidebar-bg);
+  font-weight: 600;
+}
+
+td ul { margin: 0; padding-left: 1.1rem; }
+
+/* ---------- tags (CORE / FLEX) ---------- */
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  margin-left: 0.15rem;
+  vertical-align: 1px;
+  color: #fff;
+}
+.tag.core { background: var(--tag-core-bg); }
+.tag.flex { background: var(--tag-flex-bg); }
+
+/* ---------- mobile toggle + overlay ---------- */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--text);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  min-height: 40px;
+}
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 90;
+}
+.sidebar-overlay.visible { display: block; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .menu-toggle { display: inline-flex; align-items: center; gap: 0.35rem; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(320px, 85vw);
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-out;
+    z-index: 100;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.12);
+    padding-top: 3.75rem;
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  main.main {
+    padding: 3.75rem 1.25rem 2rem;
+  }
+
+  table { font-size: 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar { transition: none; }
+}

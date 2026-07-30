@@ -84,7 +84,7 @@ It picks which navigation to render from the filename:
 - `index.html` → just the two track names, linking to each track's skeleton page
 - anything else → Track A navigation, in full
 
-The hub deliberately shows only the track names. The full page list expands once a reader is inside a track, so the sidebar isn't a wall of links on arrival. Track pages also get an "Other Track" cross-link at the bottom of the sidebar.
+The hub deliberately shows only the track names. The full page list expands once a reader is inside a track, so the sidebar isn't a wall of links on arrival. Track pages get a "Switch Tracks" cross-link at the bottom of the sidebar, styled as a bordered accent button (`.other-track` / `.other-track-title`) so it reads as a distinct control rather than another nav item.
 
 **Adding a page means editing `nav.js`.** A new HTML file will not appear in the sidebar on its own. Add it to the `items` array of the right group in `TRACK_A` or `TRACK_B`.
 

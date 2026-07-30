@@ -112,6 +112,31 @@ a:focus-visible {
   font-weight: 600;
 }
 
+/* ---------- sidebar: switch-tracks callout ---------- */
+.sidebar .other-track-title {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid var(--border);
+  color: var(--accent);
+}
+
+.sidebar .other-track a {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0.65rem 0.8rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar .other-track a:hover,
+.sidebar .other-track a:focus-visible {
+  background: var(--accent);
+  color: var(--surface);
+}
+
 /* ---------- main content ---------- */
 main.main {
   padding: 2.5rem clamp(1.5rem, 4vw, 3.5rem);

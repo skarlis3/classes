@@ -119,18 +119,20 @@
       });
 
       const other = track === TRACK_A ? TRACK_B : TRACK_A;
-      sidebar.appendChild(el("h3", "sidebar-group-title", "Other Track"));
       sidebar.appendChild(
-        linkList(
-          [
-            {
-              href: other.groups[0].items[0].href,
-              label: other.title + " — " + other.subtitle,
-            },
-          ],
-          here
-        )
+        el("h3", "sidebar-group-title other-track-title", "Switch Tracks")
       );
+      const otherList = linkList(
+        [
+          {
+            href: other.groups[0].items[0].href,
+            label: other.title + " — " + other.subtitle,
+          },
+        ],
+        here
+      );
+      otherList.className = "other-track";
+      sidebar.appendChild(otherList);
     } else {
       sidebar.appendChild(el("h3", "sidebar-group-title", "Tracks"));
       sidebar.appendChild(

@@ -7,7 +7,10 @@
     groups: [
       {
         group: "Overview",
-        items: [{ href: "skeleton.html", label: "Skeleton Draft" }],
+        items: [
+          { href: "skeleton.html", label: "Skeleton Draft" },
+          { href: "units.html", label: "Units" },
+        ],
       },
       {
         group: "Assignments",
@@ -41,7 +44,10 @@
     groups: [
       {
         group: "Overview",
-        items: [{ href: "trackb-skeleton.html", label: "Skeleton Draft" }],
+        items: [
+          { href: "trackb-skeleton.html", label: "Skeleton Draft" },
+          { href: "trackb-units.html", label: "Units" },
+        ],
       },
       {
         group: "Assignments",
@@ -111,6 +117,10 @@
     );
 
     sidebar.appendChild(linkList([HOME], here));
+
+    const rule = document.createElement("hr");
+    rule.className = "sidebar-rule";
+    sidebar.appendChild(rule);
 
     if (track) {
       track.groups.forEach((section) => {

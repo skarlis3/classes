@@ -112,6 +112,13 @@ a:focus-visible {
   font-weight: 600;
 }
 
+/* ---------- sidebar: rule under the Home link ---------- */
+.sidebar .sidebar-rule {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0 0;
+}
+
 /* ---------- sidebar: switch-tracks callout ---------- */
 .sidebar .other-track-title {
   margin-top: 1.75rem;

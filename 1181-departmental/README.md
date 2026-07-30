@@ -34,6 +34,8 @@ Editing the markdown does **not** update the site, and editing the site does **n
 
 Track B markdown filenames are prefixed `trackb-` in the vault so Obsidian wikilinks stay unambiguous against Track A's identically-named files.
 
+Some vault docs have a paired `*_archive.md` file. Those are append-only: when a section is removed or restructured, the old version is preserved there before the edit. Never edit or reorder an archive file.
+
 ---
 
 ## File map
@@ -44,6 +46,7 @@ Flat directory, Track B pages prefixed `trackb-`. This was chosen over per-track
 |---|---|---|
 | `index.html` | — | hub; describes both tracks |
 | `skeleton.html` | A | `Track A/skeleton-draft.md` |
+| `units.html` | A | `Track A/units.md` |
 | `project-1.html` | A | `Track A/project-1-genre-analysis.md` |
 | `project-2.html` | A | `Track A/project-2-multimodal.md` |
 | `writing-activities.html` | A | `Track A/writing-activities.md` |
@@ -53,6 +56,7 @@ Flat directory, Track B pages prefixed `trackb-`. This was chosen over per-track
 | `grading.html` | A | `Track A/grading.md` |
 | `objectives-map.html` | A | `Track A/objectives-map.md` |
 | `trackb-skeleton.html` | B | `Track B/trackb-skeleton-draft.md` |
+| `trackb-units.html` | B | `Track B/trackb-units.md` |
 | `trackb-project-1.html` | B | `Track B/trackb-project-1-conversation-essay.md` |
 | `trackb-project-2.html` | B | `Track B/trackb-project-2-digital-rhetoric-essay.md` |
 | `trackb-project-3.html` | B | `Track B/trackb-project-3-argument-essay.md` |
@@ -64,6 +68,13 @@ Flat directory, Track B pages prefixed `trackb-`. This was chosen over per-track
 Shared assets: `css/style.css`, `js/nav.js`.
 
 ---
+
+## The two overview pages
+
+Each track has two top-level pages, and they answer different questions:
+
+- **Skeleton Draft** (`skeleton.html`, `trackb-skeleton.html`) — what's CORE and what's FLEX. Opens with an "About This Track" summary, then required readings, required major assignments, required minor assignments, then the flex sections. **Both tracks use this exact structure**; keep them parallel.
+- **Units** (`units.html`, `trackb-units.html`) — the class broken into units, each one a major assignment with the readings and activities that feed it, plus a "What Depends on What" section naming the interlocks. Same material as the schedule, cut by assignment rather than by week.
 
 ## Track names
 
@@ -83,6 +94,8 @@ It picks which navigation to render from the filename:
 - filename starts with `trackb-` → Track B navigation, in full
 - `index.html` → just the two track names, linking to each track's skeleton page
 - anything else → Track A navigation, in full
+
+A horizontal rule (`.sidebar-rule`) sits under the Home link so it reads as separate from whichever track's navigation follows.
 
 The hub deliberately shows only the track names. The full page list expands once a reader is inside a track, so the sidebar isn't a wall of links on arrival. Track pages get a "Switch Tracks" cross-link at the bottom of the sidebar, styled as a bordered accent button (`.other-track` / `.other-track-title`) so it reads as a distinct control rather than another nav item.
 

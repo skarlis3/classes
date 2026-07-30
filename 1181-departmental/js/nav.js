@@ -132,16 +132,16 @@
         )
       );
     } else {
-      [TRACK_A, TRACK_B].forEach((t) => {
-        sidebar.appendChild(
-          el("h3", "sidebar-group-title", t.title + " — " + t.subtitle)
-        );
-        const items = [];
-        t.groups.forEach((section) => {
-          section.items.forEach((item) => items.push(item));
-        });
-        sidebar.appendChild(linkList(items, here));
-      });
+      sidebar.appendChild(el("h3", "sidebar-group-title", "Tracks"));
+      sidebar.appendChild(
+        linkList(
+          [TRACK_A, TRACK_B].map((t) => ({
+            href: t.groups[0].items[0].href,
+            label: t.title + " — " + t.subtitle,
+          })),
+          here
+        )
+      );
     }
   }
 

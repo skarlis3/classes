@@ -80,11 +80,11 @@ Both the label and the descriptor are used together throughout — page titles, 
 
 It picks which navigation to render from the filename:
 
-- filename starts with `trackb-` → Track B navigation
-- `index.html` → both tracks, flat
-- anything else → Track A navigation
+- filename starts with `trackb-` → Track B navigation, in full
+- `index.html` → just the two track names, linking to each track's skeleton page
+- anything else → Track A navigation, in full
 
-Track pages also get an "Other Track" cross-link at the bottom of the sidebar.
+The hub deliberately shows only the track names. The full page list expands once a reader is inside a track, so the sidebar isn't a wall of links on arrival. Track pages also get an "Other Track" cross-link at the bottom of the sidebar.
 
 **Adding a page means editing `nav.js`.** A new HTML file will not appear in the sidebar on its own. Add it to the `items` array of the right group in `TRACK_A` or `TRACK_B`.
 

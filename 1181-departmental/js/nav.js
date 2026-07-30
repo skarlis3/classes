@@ -1,74 +1,148 @@
 (function () {
-  const NAV = [
-    {
-      group: "Overview",
-      items: [
-        { href: "index.html", label: "Home / Proposal" },
-        { href: "skeleton.html", label: "Skeleton Draft" },
-      ],
-    },
-    {
-      group: "Assignments",
-      items: [
-        { href: "project-1.html", label: "Project 1: Genre Analysis" },
-        { href: "project-2.html", label: "Project 2: Multimodal" },
-        { href: "writing-activities.html", label: "Writing Activities" },
-        { href: "final-reflection.html", label: "Final Reflection" },
-      ],
-    },
-    {
-      group: "Schedules",
-      items: [
-        { href: "schedule-portfolio.html", label: "16-Week — Portfolio" },
-        { href: "schedule-no-portfolio.html", label: "16-Week — No Portfolio" },
-      ],
-    },
-    {
-      group: "Grading & Outcomes",
-      items: [
-        { href: "grading.html", label: "Grading" },
-        { href: "objectives-map.html", label: "Objectives Map" },
-      ],
-    },
-  ];
+  const HOME = { href: "index.html", label: "Home / Proposal" };
+
+  const TRACK_A = {
+    title: "Track A",
+    subtitle: "Genres in Your Field",
+    groups: [
+      {
+        group: "Overview",
+        items: [{ href: "skeleton.html", label: "Skeleton Draft" }],
+      },
+      {
+        group: "Assignments",
+        items: [
+          { href: "project-1.html", label: "Project 1: Genre Analysis" },
+          { href: "project-2.html", label: "Project 2: Multimodal" },
+          { href: "writing-activities.html", label: "Writing Activities" },
+          { href: "final-reflection.html", label: "Final Reflection" },
+        ],
+      },
+      {
+        group: "Schedules",
+        items: [
+          { href: "schedule-portfolio.html", label: "16-Week — Portfolio" },
+          { href: "schedule-no-portfolio.html", label: "16-Week — No Portfolio" },
+        ],
+      },
+      {
+        group: "Grading & Outcomes",
+        items: [
+          { href: "grading.html", label: "Grading" },
+          { href: "objectives-map.html", label: "Objectives Map" },
+        ],
+      },
+    ],
+  };
+
+  const TRACK_B = {
+    title: "Track B",
+    subtitle: "Digital Rhetoric & Social Media",
+    groups: [
+      {
+        group: "Overview",
+        items: [{ href: "trackb-skeleton.html", label: "Skeleton Draft" }],
+      },
+      {
+        group: "Assignments",
+        items: [
+          { href: "trackb-project-1.html", label: "Project 1: Conversation Essay" },
+          { href: "trackb-project-2.html", label: "Project 2: Digital Rhetoric" },
+          { href: "trackb-project-3.html", label: "Project 3: Argument Essay" },
+          { href: "trackb-writing-activities.html", label: "Writing Activities" },
+          { href: "trackb-final-reflection.html", label: "Final Reflection" },
+        ],
+      },
+      {
+        group: "Readings & Schedule",
+        items: [
+          { href: "trackb-readings.html", label: "Readings" },
+          { href: "trackb-schedule.html", label: "16-Week Schedule" },
+        ],
+      },
+    ],
+  };
 
   function currentPage() {
     const path = window.location.pathname.split("/").pop();
     return path === "" ? "index.html" : path;
   }
 
+  function activeTrack(page) {
+    if (page.indexOf("trackb-") === 0) return TRACK_B;
+    if (page === "index.html") return null;
+    return TRACK_A;
+  }
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  function linkList(items, here) {
+    const ul = document.createElement("ul");
+    items.forEach((item) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = item.href;
+      a.textContent = item.label;
+      if (here && item.href === here) a.setAttribute("aria-current", "page");
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
   function renderSidebar() {
     const sidebar = document.getElementById("sidebar");
     if (!sidebar) return;
     const here = currentPage();
+    const track = activeTrack(here);
 
-    const title = document.createElement("h2");
-    title.textContent = "ENGL 1181 — Track A Skeleton";
-    sidebar.appendChild(title);
+    sidebar.appendChild(el("h2", null, "ENGL 1181 Skeleton"));
+    sidebar.appendChild(
+      el(
+        "p",
+        "sidebar-subtitle",
+        track ? track.title + " — " + track.subtitle : "FYW Proposal Draft"
+      )
+    );
 
-    const subtitle = document.createElement("p");
-    subtitle.className = "sidebar-subtitle";
-    subtitle.textContent = "FYW Proposal Draft";
-    sidebar.appendChild(subtitle);
+    sidebar.appendChild(linkList([HOME], here));
 
-    NAV.forEach((section) => {
-      const groupTitle = document.createElement("h3");
-      groupTitle.className = "sidebar-group-title";
-      groupTitle.textContent = section.group;
-      sidebar.appendChild(groupTitle);
-
-      const ul = document.createElement("ul");
-      section.items.forEach((item) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = item.href;
-        a.textContent = item.label;
-        if (item.href === here) a.setAttribute("aria-current", "page");
-        li.appendChild(a);
-        ul.appendChild(li);
+    if (track) {
+      track.groups.forEach((section) => {
+        sidebar.appendChild(el("h3", "sidebar-group-title", section.group));
+        sidebar.appendChild(linkList(section.items, here));
       });
-      sidebar.appendChild(ul);
-    });
+
+      const other = track === TRACK_A ? TRACK_B : TRACK_A;
+      sidebar.appendChild(el("h3", "sidebar-group-title", "Other Track"));
+      sidebar.appendChild(
+        linkList(
+          [
+            {
+              href: other.groups[0].items[0].href,
+              label: other.title + " — " + other.subtitle,
+            },
+          ],
+          here
+        )
+      );
+    } else {
+      [TRACK_A, TRACK_B].forEach((t) => {
+        sidebar.appendChild(
+          el("h3", "sidebar-group-title", t.title + " — " + t.subtitle)
+        );
+        const items = [];
+        t.groups.forEach((section) => {
+          section.items.forEach((item) => items.push(item));
+        });
+        sidebar.appendChild(linkList(items, here));
+      });
+    }
   }
 
   function setupMobileToggle() {

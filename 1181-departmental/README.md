@@ -101,7 +101,7 @@ omission to fill in.
 Both the label and the descriptor are used together throughout — page titles, headings, sidebar, hub.
 
 - **Track A — Genres in Your Field** (genre analysis)
-- **Track B — Digital Rhetoric & Social Media**
+- **Track B — Digital Lives**
 - **Track C — Rhetoric & AI Ethics** — *working title.* If it changes, it changes in eight page titles, `nav.js`, `index.html`, and the skeleton page's `<h1>`.
 
 ---
@@ -141,7 +141,7 @@ Every page is the same shell. Copy an existing page and replace the `<title>` an
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page Name — Track B: Digital Rhetoric &amp; Social Media</title>
+  <title>Page Name — Track B: Digital Lives</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>

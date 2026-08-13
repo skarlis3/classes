@@ -41,7 +41,7 @@
 
   const TRACK_B = {
     title: "Track B",
-    subtitle: "Digital Rhetoric & Social Media",
+    subtitle: "Digital Lives",
     groups: [
       {
         group: "Overview",

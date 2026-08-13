@@ -10,6 +10,7 @@
         items: [
           { href: "skeleton.html", label: "Skeleton Draft" },
           { href: "units.html", label: "Units" },
+          { href: "in-class-topics.html", label: "In-class / Lecture Topics" },
         ],
       },
       {
@@ -69,15 +70,62 @@
     ],
   };
 
+  const TRACK_C = {
+    title: "Track C",
+    subtitle: "Rhetoric & AI Ethics",
+    groups: [
+      {
+        group: "Overview",
+        items: [
+          { href: "trackc-skeleton.html", label: "Skeleton Draft" },
+          { href: "trackc-units.html", label: "Units" },
+        ],
+      },
+      {
+        group: "Assignments",
+        items: [
+          { href: "trackc-project-1.html", label: "Project 1: Group Presentation" },
+          { href: "trackc-project-2.html", label: "Project 2: Rhetorical Analysis" },
+          { href: "trackc-project-3.html", label: "Project 3: PSA Poster" },
+          { href: "trackc-writing-activities.html", label: "Writing Activities" },
+        ],
+      },
+      {
+        group: "Readings & Schedule",
+        items: [
+          { href: "trackc-readings.html", label: "Readings" },
+          { href: "trackc-schedule.html", label: "16-Week Schedule" },
+        ],
+      },
+    ],
+  };
+
+  // Track A owns the unprefixed filenames, so it stays the fallback. Every track
+  // added after it needs a prefix here.
+  const TRACKS = [TRACK_A, TRACK_B, TRACK_C];
+  const PREFIXES = [
+    { prefix: "trackb-", track: TRACK_B },
+    { prefix: "trackc-", track: TRACK_C },
+  ];
+
   function currentPage() {
     const path = window.location.pathname.split("/").pop();
     return path === "" ? "index.html" : path;
   }
 
   function activeTrack(page) {
-    if (page.indexOf("trackb-") === 0) return TRACK_B;
+    for (let i = 0; i < PREFIXES.length; i++) {
+      if (page.indexOf(PREFIXES[i].prefix) === 0) return PREFIXES[i].track;
+    }
     if (page === "index.html") return null;
     return TRACK_A;
+  }
+
+  function trackLink(track) {
+    return {
+      href: track.groups[0].items[0].href,
+      label: track.title + " — " + track.subtitle,
+    };
   }
 
   function el(tag, className, text) {
@@ -128,32 +176,16 @@
         sidebar.appendChild(linkList(section.items, here));
       });
 
-      const other = track === TRACK_A ? TRACK_B : TRACK_A;
+      const others = TRACKS.filter((t) => t !== track);
       sidebar.appendChild(
         el("h3", "sidebar-group-title other-track-title", "Switch Tracks")
       );
-      const otherList = linkList(
-        [
-          {
-            href: other.groups[0].items[0].href,
-            label: other.title + " — " + other.subtitle,
-          },
-        ],
-        here
-      );
+      const otherList = linkList(others.map(trackLink), here);
       otherList.className = "other-track";
       sidebar.appendChild(otherList);
     } else {
       sidebar.appendChild(el("h3", "sidebar-group-title", "Tracks"));
-      sidebar.appendChild(
-        linkList(
-          [TRACK_A, TRACK_B].map((t) => ({
-            href: t.groups[0].items[0].href,
-            label: t.title + " — " + t.subtitle,
-          })),
-          here
-        )
-      );
+      sidebar.appendChild(linkList(TRACKS.map(trackLink), here));
     }
   }
 
